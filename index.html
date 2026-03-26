@@ -1,626 +1,553 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Showcase Pro | Nexo Local</title>
-    <meta name="description" content="Vitrina interactiva de plantillas web Nexo Local. 10 modelos listos para taquerías, restaurantes, boutiques y ferreterías en Reforma, Chiapas.">
-    <meta property="og:title" content="Showcase Pro | Nexo Local">
-    <meta property="og:description" content="Simulador de negocios y vitrina interactiva para PYMES en Reforma, Chiapas.">
-    <meta property="og:type" content="website">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --azul-nexo: #0047AB;
-            --ambar-nexo: #FFBF00;
-            --slate-nexo: #1E1E1E;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Showcase Pro | Nexo Local</title>
+<meta name="description" content="Vitrina interactiva de plantillas web Nexo Local. 10 modelos listos para PYMES en el sur de México.">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--azul:#0047AB;--ambar:#FFBF00;--slate:#1E1E1E;}
+*{box-sizing:border-box;}
+body{font-family:'Open Sans',sans-serif;background:#f8fafc;color:#1e293b;}
+h1,h2,h3,h4{font-family:'Montserrat',sans-serif;}
+html{scroll-behavior:smooth;}
 
-        * { box-sizing: border-box; }
-        body { font-family: 'Open Sans', sans-serif; background-color: #f8fafc; color: #1e293b; }
-        h1, h2, h3, h4 { font-family: 'Montserrat', sans-serif; }
+.hero-gradient{background:linear-gradient(135deg,#0047AB 0%,#002D6B 60%,#001a40 100%);}
+.gradient-text{background:linear-gradient(90deg,#FFBF00,#FFD700,#FFBF00);background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer 3s linear infinite;}
+@keyframes shimmer{to{background-position:200% center;}}
 
-        /* Gradient hero */
-        .hero-gradient {
-            background: linear-gradient(135deg, #0047AB 0%, #002D6B 60%, #001a40 100%);
-        }
+.chart-container{position:relative;width:100%;height:300px;}
 
-        /* Animated gradient text */
-        .gradient-text {
-            background: linear-gradient(90deg, #FFBF00, #FFD700, #FFBF00);
-            background-size: 200% auto;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: shimmer 3s linear infinite;
-        }
-        @keyframes shimmer {
-            to { background-position: 200% center; }
-        }
+.template-card{transition:all 0.4s cubic-bezier(0.175,0.885,0.32,1.275);}
+.template-card:hover{transform:translateY(-10px) scale(1.02);box-shadow:0 25px 50px -12px rgba(0,71,171,0.15);}
 
-        .chart-container {
-            position: relative;
-            width: 100%;
-            height: 300px;
-        }
+.filter-btn{background:transparent;color:#64748b;cursor:pointer;border:none;transition:all 0.25s ease;}
+.filter-btn:hover{color:#0047AB;}
+.filter-btn.active{background-color:#0047AB;color:white;box-shadow:0 4px 14px 0 rgba(0,71,171,0.35);}
 
-        /* Card hover */
-        .template-card {
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        .template-card:hover {
-            transform: translateY(-12px) scale(1.02);
-            box-shadow: 0 25px 50px -12px rgba(0, 71, 171, 0.18);
-        }
+.badge-semilla{background:#f1f5f9;color:#475569;border:1px solid #e2e8f0;}
+.badge-cosecha{background:#fef3c7;color:#92400e;border:1px solid #fde68a;}
 
-        /* Filter buttons */
-        .filter-btn {
-            background: transparent;
-            color: #64748b;
-            cursor: pointer;
-            border: none;
-            transition: all 0.25s ease;
-        }
-        .filter-btn:hover { color: #0047AB; }
-        .filter-btn.active {
-            background-color: #0047AB;
-            color: white;
-            box-shadow: 0 4px 14px 0 rgba(0, 71, 171, 0.35);
-        }
+.particle{position:absolute;border-radius:50%;opacity:.12;animation:float 8s ease-in-out infinite;}
+@keyframes float{0%,100%{transform:translateY(0) rotate(0deg);}50%{transform:translateY(-30px) rotate(180deg);}}
 
-        .badge-semilla { background-color: #f1f5f9; color: #475569; border: 1px solid #e2e8f0; }
-        .badge-cosecha { background-color: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
+.pulse-ring{animation:pulse-ring 2s ease-out infinite;}
+@keyframes pulse-ring{0%{box-shadow:0 0 0 0 rgba(37,211,102,.4);}70%{box-shadow:0 0 0 16px rgba(37,211,102,0);}100%{box-shadow:0 0 0 0 rgba(37,211,102,0);}}
 
-        /* Floating particles */
-        .particle {
-            position: absolute;
-            border-radius: 50%;
-            opacity: 0.12;
-            animation: float 8s ease-in-out infinite;
-        }
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-30px) rotate(180deg); }
-        }
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .6s ease,transform .6s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
 
-        /* Pulse ring for CTA */
-        .pulse-ring {
-            animation: pulse-ring 2s ease-out infinite;
-        }
-        @keyframes pulse-ring {
-            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.4); }
-            70% { box-shadow: 0 0 0 16px rgba(37, 211, 102, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
-        }
+nav{backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);}
+tbody tr{transition:background .2s ease;}
+tbody tr:hover{background:#f8fafc;}
 
-        /* KPI counter animation */
-        .kpi-value {
-            transition: all 0.3s ease;
-        }
+/* ── MODAL OVERLAY ── */
+.modal-overlay{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.6);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);padding:16px;opacity:0;pointer-events:none;transition:opacity .3s ease;}
+.modal-overlay.open{opacity:1;pointer-events:all;}
+.modal-box{background:#fff;border-radius:2rem;width:100%;max-width:900px;max-height:90vh;overflow-y:auto;position:relative;transform:translateY(30px);transition:transform .3s ease;box-shadow:0 40px 80px rgba(0,0,0,.3);}
+.modal-overlay.open .modal-box{transform:translateY(0);}
+.modal-close{position:absolute;top:20px;right:20px;z-index:10;background:#f1f5f9;border:none;width:36px;height:36px;border-radius:50%;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s;}
+.modal-close:hover{background:#e2e8f0;}
 
-        /* Scroll reveal */
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
+/* ── BROWSER FRAME PREVIEW ── */
+.browser-frame{background:#1e293b;border-radius:1.25rem;overflow:hidden;box-shadow:0 20px 40px rgba(0,0,0,.25);}
+.browser-bar{background:#0f172a;padding:10px 16px;display:flex;align-items:center;gap:8px;}
+.browser-dot{width:10px;height:10px;border-radius:50%;}
+.browser-url{background:#1e293b;color:#94a3b8;font-size:11px;font-weight:bold;padding:4px 12px;border-radius:20px;flex:1;text-align:center;font-family:monospace;}
+.preview-content{background:#fff;overflow:hidden;}
 
-        /* Table row hover */
-        tbody tr { transition: background 0.2s ease; }
-        tbody tr:hover { background: #f8fafc; }
-
-        /* Nav blur */
-        nav { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
-
-        /* Mobile menu */
-        #mobileMenu { transition: all 0.3s ease; }
-
-        /* Smooth scroll */
-        html { scroll-behavior: smooth; }
-
-        /* Card plan tag */
-        .plan-tag-cosecha {
-            background: linear-gradient(135deg, #d97706, #f59e0b);
-            color: white;
-        }
-    </style>
+/* ── FORM MODAL ── */
+.form-field{width:100%;border:2px solid #e2e8f0;border-radius:.75rem;padding:.75rem 1rem;font-family:'Open Sans',sans-serif;font-size:.875rem;transition:border .2s;}
+.form-field:focus{outline:none;border-color:#0047AB;}
+</style>
 </head>
 <body class="antialiased">
 
-    <!-- ═══════════════════════════════════ NAV ═══════════════════════════════════ -->
-    <nav class="sticky top-0 z-50 bg-white/80 border-b border-gray-100">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 bg-[#0047AB] rounded-xl flex items-center justify-center font-black text-white text-xl shadow-lg shadow-blue-200">N</div>
-                <span class="text-2xl font-black tracking-tight text-[#0047AB]">Nexo<span class="text-[#FFBF00]">Local</span></span>
-            </div>
-            <div class="hidden lg:flex gap-8 text-sm font-bold uppercase tracking-wider text-gray-400">
-                <a href="#proyeccion" class="hover:text-[#0047AB] transition-colors">Inversión</a>
-                <a href="#galeria" class="hover:text-[#0047AB] transition-colors">Plantillas</a>
-                <a href="#comparativa" class="hover:text-[#0047AB] transition-colors">Planes</a>
-            </div>
-            <div class="flex items-center gap-4">
-                <span class="hidden sm:block text-xs font-black text-gray-300 tracking-widest uppercase">Reforma, Chis</span>
-                <a href="https://nexolocal.lat" target="_blank" rel="noopener" class="bg-[#0047AB] text-white px-5 py-2.5 rounded-xl font-black text-sm shadow-lg shadow-blue-200 hover:bg-blue-800 transition-colors">Web Oficial</a>
-            </div>
+<!-- NAV -->
+<nav class="sticky top-0 z-50 bg-white/80 border-b border-gray-100">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 bg-[#0047AB] rounded-xl flex items-center justify-center font-black text-white text-xl shadow-lg shadow-blue-200">N</div>
+      <span class="text-2xl font-black tracking-tight text-[#0047AB]">Nexo<span class="text-[#FFBF00]">Local</span></span>
+    </div>
+    <div class="hidden lg:flex gap-8 text-sm font-bold uppercase tracking-wider text-gray-400">
+      <a href="#proyeccion" class="hover:text-[#0047AB] transition-colors">Inversión</a>
+      <a href="#galeria" class="hover:text-[#0047AB] transition-colors">Plantillas</a>
+      <a href="#comparativa" class="hover:text-[#0047AB] transition-colors">Planes</a>
+    </div>
+    <div class="flex items-center gap-4">
+      <span class="hidden sm:block text-xs font-black text-gray-300 tracking-widest uppercase">Sur de México</span>
+      <a href="https://nexolocal.lat" target="_blank" rel="noopener" class="bg-[#0047AB] text-white px-5 py-2.5 rounded-xl font-black text-sm shadow-lg shadow-blue-200 hover:bg-blue-800 transition-colors">Web Oficial</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero-gradient relative overflow-hidden py-24 md:py-36">
+  <div class="particle w-96 h-96 bg-blue-300 top-[-10%] right-[-10%]" style="animation-delay:0s"></div>
+  <div class="particle w-64 h-64 bg-yellow-300 bottom-[-5%] left-[-5%]" style="animation-delay:2s"></div>
+  <div class="particle w-48 h-48 bg-blue-200 top-[30%] left-[20%]" style="animation-delay:4s"></div>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 relative z-10 text-center">
+    <div class="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-5 py-2 mb-8 text-xs font-black text-white/80 uppercase tracking-widest">
+      <span class="w-2 h-2 rounded-full bg-[#FFBF00] animate-pulse"></span>
+      Sur de México · Producto Live
+    </div>
+    <h1 class="text-5xl md:text-7xl font-black text-white leading-none mb-6">La Infraestructura<br><span class="gradient-text">Digital para PYMES</span></h1>
+    <p class="text-white/70 text-lg md:text-xl font-medium max-w-2xl mx-auto mb-12 leading-relaxed">10 plantillas base listas para clonación. Dashboard de rentabilidad en tiempo real. El "Whole Product" que tu cliente necesita — y que tú monetizas.</p>
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <a href="#galeria" class="bg-[#FFBF00] text-[#002D6B] px-8 py-4 rounded-2xl font-black text-sm uppercase tracking-wider hover:bg-yellow-300 transition-colors shadow-xl shadow-yellow-500/30">Ver las 10 Plantillas →</a>
+      <a href="#proyeccion" class="bg-white/10 border border-white/20 text-white px-8 py-4 rounded-2xl font-black text-sm uppercase tracking-wider hover:bg-white/20 transition-colors">Dashboard Financiero</a>
+    </div>
+    <div class="mt-20 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
+      <div class="bg-white/10 border border-white/15 rounded-2xl p-5"><div class="text-3xl font-black text-white">10</div><div class="text-xs text-white/50 font-bold uppercase mt-1">Plantillas</div></div>
+      <div class="bg-white/10 border border-white/15 rounded-2xl p-5"><div class="text-3xl font-black text-white">85%</div><div class="text-xs text-white/50 font-bold uppercase mt-1">Margen bruto</div></div>
+      <div class="bg-white/10 border border-white/15 rounded-2xl p-5"><div class="text-3xl font-black text-white">4</div><div class="text-xs text-white/50 font-bold uppercase mt-1">Industrias</div></div>
+      <div class="bg-white/10 border border-white/15 rounded-2xl p-5"><div class="text-3xl font-black text-[#FFBF00]">$250k</div><div class="text-xs text-white/50 font-bold uppercase mt-1">MRR Meta</div></div>
+    </div>
+  </div>
+</header>
+
+<!-- INVESTOR INTEL -->
+<section id="proyeccion" class="py-20 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="mb-12 reveal">
+      <div class="inline-block bg-blue-50 text-[#0047AB] text-xs font-black uppercase tracking-widest px-4 py-2 rounded-full mb-4">📊 Investor Intel</div>
+      <h2 class="text-4xl md:text-5xl font-black text-gray-900 mb-4">Dashboard de Proyección<br class="hidden md:block"> Económica</h2>
+      <p class="text-gray-400 font-medium italic max-w-xl">"Escalando el mañana, hoy." Datos proyectados para la región sur de México.</p>
+    </div>
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
+      <div class="lg:col-span-2 bg-slate-50 p-8 rounded-[2.5rem] border border-gray-100 shadow-sm reveal">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
+          <div>
+            <h3 class="text-xl font-black text-gray-800">Crecimiento de MRR</h3>
+            <p class="text-xs font-bold text-blue-500 uppercase tracking-wider mt-1">Ingreso Mensual Recurrente Proyectado</p>
+          </div>
+          <div class="text-right bg-white p-4 rounded-2xl shadow-sm">
+            <span class="text-3xl font-black text-[#0047AB]">$250k+</span>
+            <span class="block text-[10px] text-gray-400 font-black uppercase tracking-widest mt-1">Meta Mes 12</span>
+          </div>
         </div>
-    </nav>
-
-    <!-- ═══════════════════════════════════ HERO ═══════════════════════════════════ -->
-    <header class="hero-gradient relative overflow-hidden py-24 md:py-36">
-        <!-- Background particles -->
-        <div class="particle w-96 h-96 bg-blue-300 top-[-10%] right-[-10%]" style="animation-delay:0s"></div>
-        <div class="particle w-64 h-64 bg-yellow-300 bottom-[-5%] left-[-5%]" style="animation-delay:2s"></div>
-        <div class="particle w-48 h-48 bg-blue-200 top-[30%] left-[20%]" style="animation-delay:4s"></div>
-
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 relative z-10 text-center">
-            <div class="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-5 py-2 mb-8 text-xs font-black text-white/80 uppercase tracking-widest">
-                <span class="w-2 h-2 rounded-full bg-[#FFBF00] animate-pulse"></span>
-                Reforma, Chiapas · Producto Live
-            </div>
-            <h1 class="text-5xl md:text-7xl font-black text-white leading-none mb-6">
-                La Infraestructura<br>
-                <span class="gradient-text">Digital para PYMES</span>
-            </h1>
-            <p class="text-white/70 text-lg md:text-xl font-medium max-w-2xl mx-auto mb-12 leading-relaxed">
-                10 plantillas base listas para clonación. Dashboard de rentabilidad en tiempo real. El "Whole Product" que tu cliente necesita — y que tú monetizas.
-            </p>
-            <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="#galeria" class="bg-[#FFBF00] text-[#002D6B] px-8 py-4 rounded-2xl font-black text-sm uppercase tracking-wider hover:bg-yellow-300 transition-colors shadow-xl shadow-yellow-500/30">
-                    Ver las 10 Plantillas →
-                </a>
-                <a href="#proyeccion" class="bg-white/10 border border-white/20 text-white px-8 py-4 rounded-2xl font-black text-sm uppercase tracking-wider hover:bg-white/20 transition-colors">
-                    Dashboard Financiero
-                </a>
-            </div>
-
-            <!-- Stats bar -->
-            <div class="mt-20 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
-                <div class="bg-white/10 border border-white/15 rounded-2xl p-5">
-                    <div class="text-3xl font-black text-white">10</div>
-                    <div class="text-xs text-white/50 font-bold uppercase mt-1">Plantillas</div>
-                </div>
-                <div class="bg-white/10 border border-white/15 rounded-2xl p-5">
-                    <div class="text-3xl font-black text-white">85%</div>
-                    <div class="text-xs text-white/50 font-bold uppercase mt-1">Margen bruto</div>
-                </div>
-                <div class="bg-white/10 border border-white/15 rounded-2xl p-5">
-                    <div class="text-3xl font-black text-white">4</div>
-                    <div class="text-xs text-white/50 font-bold uppercase mt-1">Industrias</div>
-                </div>
-                <div class="bg-white/10 border border-white/15 rounded-2xl p-5">
-                    <div class="text-3xl font-black text-[#FFBF00]">$250k</div>
-                    <div class="text-xs text-white/50 font-bold uppercase mt-1">MRR Meta</div>
-                </div>
-            </div>
+        <div class="chart-container"><canvas id="mrrChart"></canvas></div>
+      </div>
+      <div class="bg-[#1E1E1E] p-8 rounded-[2.5rem] text-white flex flex-col justify-between shadow-2xl reveal">
+        <div>
+          <h3 class="text-xl font-black mb-1">KPIs Nexo</h3>
+          <p class="text-gray-400 text-sm mb-8">Eficiencia del modelo de negocio.</p>
+          <div class="space-y-0">
+            <div class="flex justify-between items-center border-b border-white/10 py-5"><div><div class="text-xs text-gray-400 uppercase font-bold tracking-widest mb-1">CAC</div><div class="text-sm font-semibold">Costo Adquisición</div></div><span class="text-2xl font-black text-[#FFBF00]">$200</span></div>
+            <div class="flex justify-between items-center border-b border-white/10 py-5"><div><div class="text-xs text-gray-400 uppercase font-bold tracking-widest mb-1">GM</div><div class="text-sm font-semibold">Margen Bruto</div></div><span class="text-2xl font-black text-[#FFBF00]">85%</span></div>
+            <div class="flex justify-between items-center border-b border-white/10 py-5"><div><div class="text-xs text-gray-400 uppercase font-bold tracking-widest mb-1">CHURN</div><div class="text-sm font-semibold">Tasa de Pérdida Est.</div></div><span class="text-2xl font-black text-[#FFBF00]">2.5%</span></div>
+            <div class="flex justify-between items-center py-5"><div><div class="text-xs text-gray-400 uppercase font-bold tracking-widest mb-1">LTV</div><div class="text-sm font-semibold">Valor de Vida Cliente</div></div><span class="text-2xl font-black text-[#FFBF00]">$9.6k</span></div>
+          </div>
         </div>
-    </header>
-
-    <!-- ═══════════════════════════════════ INVESTOR INTEL ═══════════════════════════════════ -->
-    <section id="proyeccion" class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6">
-            <div class="mb-12 reveal">
-                <div class="inline-block bg-blue-50 text-[#0047AB] text-xs font-black uppercase tracking-widest px-4 py-2 rounded-full mb-4">📊 Investor Intel</div>
-                <h2 class="text-4xl md:text-5xl font-black text-gray-900 mb-4">Dashboard de Proyección<br class="hidden md:block"> Económica</h2>
-                <p class="text-gray-400 font-medium italic max-w-xl">"Escalando el mañana, hoy." Datos proyectados para la zona norte de Chiapas.</p>
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
-                <!-- MRR Chart -->
-                <div class="lg:col-span-2 bg-slate-50 p-8 rounded-[2.5rem] border border-gray-100 shadow-sm reveal">
-                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
-                        <div>
-                            <h3 class="text-xl font-black text-gray-800">Crecimiento de MRR</h3>
-                            <p class="text-xs font-bold text-blue-500 uppercase tracking-wider mt-1">Ingreso Mensual Recurrente Proyectado</p>
-                        </div>
-                        <div class="text-right bg-white p-4 rounded-2xl shadow-sm">
-                            <span class="text-3xl font-black text-[#0047AB]">$250k+</span>
-                            <span class="block text-[10px] text-gray-400 font-black uppercase tracking-widest mt-1">Meta Mes 12</span>
-                        </div>
-                    </div>
-                    <div class="chart-container">
-                        <canvas id="mrrChart"></canvas>
-                    </div>
-                </div>
-
-                <!-- KPIs -->
-                <div class="bg-[#1E1E1E] p-8 rounded-[2.5rem] text-white flex flex-col justify-between shadow-2xl reveal">
-                    <div>
-                        <h3 class="text-xl font-black mb-1">KPIs Nexo</h3>
-                        <p class="text-gray-400 text-sm mb-8">Eficiencia del modelo de negocio.</p>
-                        <div class="space-y-0">
-                            <div class="flex justify-between items-center border-b border-white/10 py-5">
-                                <div>
-                                    <div class="text-xs text-gray-400 uppercase font-bold tracking-widest mb-1">CAC</div>
-                                    <div class="text-sm font-semibold">Costo Adquisición</div>
-                                </div>
-                                <span class="text-2xl font-black text-[#FFBF00]">$200</span>
-                            </div>
-                            <div class="flex justify-between items-center border-b border-white/10 py-5">
-                                <div>
-                                    <div class="text-xs text-gray-400 uppercase font-bold tracking-widest mb-1">GM</div>
-                                    <div class="text-sm font-semibold">Margen Bruto</div>
-                                </div>
-                                <span class="text-2xl font-black text-[#FFBF00]">85%</span>
-                            </div>
-                            <div class="flex justify-between items-center border-b border-white/10 py-5">
-                                <div>
-                                    <div class="text-xs text-gray-400 uppercase font-bold tracking-widest mb-1">CHURN</div>
-                                    <div class="text-sm font-semibold">Tasa de Pérdida Est.</div>
-                                </div>
-                                <span class="text-2xl font-black text-[#FFBF00]">2.5%</span>
-                            </div>
-                            <div class="flex justify-between items-center py-5">
-                                <div>
-                                    <div class="text-xs text-gray-400 uppercase font-bold tracking-widest mb-1">LTV</div>
-                                    <div class="text-sm font-semibold">Valor de Vida Cliente</div>
-                                </div>
-                                <span class="text-2xl font-black text-[#FFBF00]">$9.6k</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-6">
-                        <a href="https://wa.me/529933440942?text=Hola%2C%20quiero%20el%20resumen%20financiero%20de%20Nexo%20Local" target="_blank" rel="noopener"
-                           class="block w-full bg-white/10 py-4 rounded-2xl font-black text-center text-sm hover:bg-white/20 transition-colors border border-white/10">
-                            📄 Solicitar Resumen Financiero
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Secondary KPI row -->
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6 reveal">
-                <div class="bg-blue-50 p-6 rounded-3xl">
-                    <div class="text-xs text-blue-400 font-black uppercase tracking-widest mb-2">Plan Semilla</div>
-                    <div class="text-2xl font-black text-[#0047AB]">$299 <span class="text-sm text-blue-400">/mes</span></div>
-                    <div class="text-xs text-gray-500 mt-1">Punto de entrada</div>
-                </div>
-                <div class="bg-amber-50 p-6 rounded-3xl">
-                    <div class="text-xs text-amber-500 font-black uppercase tracking-widest mb-2">Plan Cosecha</div>
-                    <div class="text-2xl font-black text-amber-600">$799 <span class="text-sm text-amber-400">/mes</span></div>
-                    <div class="text-xs text-gray-500 mt-1">Motor de crecimiento</div>
-                </div>
-                <div class="bg-green-50 p-6 rounded-3xl">
-                    <div class="text-xs text-green-500 font-black uppercase tracking-widest mb-2">Clientes objetivo</div>
-                    <div class="text-2xl font-black text-green-600">500+</div>
-                    <div class="text-xs text-gray-500 mt-1">PYMES en la región</div>
-                </div>
-                <div class="bg-purple-50 p-6 rounded-3xl">
-                    <div class="text-xs text-purple-400 font-black uppercase tracking-widest mb-2">Break-even</div>
-                    <div class="text-2xl font-black text-purple-600">Mes 3</div>
-                    <div class="text-xs text-gray-500 mt-1">Proyección conservadora</div>
-                </div>
-            </div>
+        <div class="mt-6">
+          <a href="https://wa.me/529933440942?text=Hola%2C%20quiero%20el%20resumen%20financiero%20de%20Nexo%20Local" target="_blank" rel="noopener" class="block w-full bg-white/10 py-4 rounded-2xl font-black text-center text-sm hover:bg-white/20 transition-colors border border-white/10">📄 Solicitar Resumen Financiero</a>
         </div>
-    </section>
+      </div>
+    </div>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6 reveal">
+      <div class="bg-blue-50 p-6 rounded-3xl"><div class="text-xs text-blue-400 font-black uppercase tracking-widest mb-2">Plan Semilla</div><div class="text-2xl font-black text-[#0047AB]">$299 <span class="text-sm text-blue-400">/mes</span></div><div class="text-xs text-gray-500 mt-1">Punto de entrada</div></div>
+      <div class="bg-amber-50 p-6 rounded-3xl"><div class="text-xs text-amber-500 font-black uppercase tracking-widest mb-2">Plan Cosecha</div><div class="text-2xl font-black text-amber-600">$799 <span class="text-sm text-amber-400">/mes</span></div><div class="text-xs text-gray-500 mt-1">Motor de crecimiento</div></div>
+      <div class="bg-green-50 p-6 rounded-3xl"><div class="text-xs text-green-500 font-black uppercase tracking-widest mb-2">Clientes objetivo</div><div class="text-2xl font-black text-green-600">500+</div><div class="text-xs text-gray-500 mt-1">PYMES en la región</div></div>
+      <div class="bg-purple-50 p-6 rounded-3xl"><div class="text-xs text-purple-400 font-black uppercase tracking-widest mb-2">Break-even</div><div class="text-2xl font-black text-purple-600">Mes 3</div><div class="text-xs text-gray-500 mt-1">Proyección conservadora</div></div>
+    </div>
+  </div>
+</section>
 
-    <!-- ═══════════════════════════════════ GALERÍA ═══════════════════════════════════ -->
-    <section id="galeria" class="py-20 bg-slate-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6">
-            <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-12 gap-8 reveal">
-                <div>
-                    <div class="inline-block bg-blue-100 text-[#0047AB] text-xs font-black uppercase tracking-widest px-4 py-2 rounded-full mb-4">🗂️ Catálogo</div>
-                    <h2 class="text-4xl md:text-5xl font-black text-gray-900 mb-2">Galería de Plantillas</h2>
-                    <p class="text-gray-400 font-medium">10 modelos base listos para clonación y despliegue rápido.</p>
-                </div>
-                <div class="flex flex-wrap gap-2 p-2 bg-white rounded-2xl shadow-sm border border-gray-100">
-                    <button onclick="filterType('todas', this)" class="filter-btn active px-5 py-2 rounded-xl text-xs font-black uppercase tracking-wider">Todas</button>
-                    <button onclick="filterType('taqueria', this)" class="filter-btn px-5 py-2 rounded-xl text-xs font-black uppercase tracking-wider">🌮 Taquerías</button>
-                    <button onclick="filterType('restaurante', this)" class="filter-btn px-5 py-2 rounded-xl text-xs font-black uppercase tracking-wider">🍽️ Restaurantes</button>
-                    <button onclick="filterType('boutique', this)" class="filter-btn px-5 py-2 rounded-xl text-xs font-black uppercase tracking-wider">👗 Boutiques</button>
-                    <button onclick="filterType('ferreteria', this)" class="filter-btn px-5 py-2 rounded-xl text-xs font-black uppercase tracking-wider">🔨 Ferreterías</button>
-                </div>
-            </div>
+<!-- GALERÍA -->
+<section id="galeria" class="py-20 bg-slate-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-12 gap-8 reveal">
+      <div>
+        <div class="inline-block bg-blue-100 text-[#0047AB] text-xs font-black uppercase tracking-widest px-4 py-2 rounded-full mb-4">🗂️ Catálogo</div>
+        <h2 class="text-4xl md:text-5xl font-black text-gray-900 mb-2">Galería de Plantillas</h2>
+        <p class="text-gray-400 font-medium">10 modelos base listos para clonación y despliegue rápido.</p>
+      </div>
+      <div class="flex flex-wrap gap-2 p-2 bg-white rounded-2xl shadow-sm border border-gray-100">
+        <button onclick="filterType('todas',this)" class="filter-btn active px-5 py-2 rounded-xl text-xs font-black uppercase tracking-wider">Todas</button>
+        <button onclick="filterType('taqueria',this)" class="filter-btn px-5 py-2 rounded-xl text-xs font-black uppercase tracking-wider">🌮 Taquerías</button>
+        <button onclick="filterType('restaurante',this)" class="filter-btn px-5 py-2 rounded-xl text-xs font-black uppercase tracking-wider">🍽️ Restaurantes</button>
+        <button onclick="filterType('boutique',this)" class="filter-btn px-5 py-2 rounded-xl text-xs font-black uppercase tracking-wider">👗 Boutiques</button>
+        <button onclick="filterType('ferreteria',this)" class="filter-btn px-5 py-2 rounded-xl text-xs font-black uppercase tracking-wider">🔨 Ferreterías</button>
+      </div>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5" id="templateContainer"></div>
+  </div>
+</section>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5" id="templateContainer">
-                <!-- Populated by JS -->
-            </div>
+<!-- COMPARATIVA -->
+<section id="comparativa" class="py-24 bg-white border-y border-gray-100">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6">
+    <div class="text-center mb-16 reveal">
+      <div class="inline-block bg-gray-100 text-gray-500 text-xs font-black uppercase tracking-widest px-4 py-2 rounded-full mb-4">⚖️ Comparativa</div>
+      <h2 class="text-4xl font-black text-gray-900">Anatomía del Servicio</h2>
+      <p class="text-gray-400 font-medium mt-3">El "Cierre Silencioso": el cliente ve el porqué sin que tengas que convencerlo.</p>
+    </div>
+    <div class="overflow-x-auto rounded-3xl border border-gray-100 shadow-sm reveal">
+      <table class="w-full text-left border-collapse">
+        <thead>
+          <tr class="bg-gray-50">
+            <th class="py-5 px-6 text-xs font-black uppercase text-gray-400 tracking-widest">Funcionalidad</th>
+            <th class="py-5 px-6 text-xs font-black uppercase text-[#0047AB] tracking-widest">Plan Semilla<br><span class="text-gray-400 normal-case font-bold">$299 / mes</span></th>
+            <th class="py-5 px-6 text-xs font-black uppercase text-amber-600 tracking-widest">Plan Cosecha<br><span class="text-gray-400 normal-case font-bold">$799 / mes</span></th>
+          </tr>
+        </thead>
+        <tbody class="text-sm font-medium divide-y divide-gray-50">
+          <tr><td class="py-5 px-6 text-gray-800 font-bold">Registro en Google Maps</td><td class="py-5 px-6"><span class="text-green-500 font-black">✓</span> Incluido</td><td class="py-5 px-6"><span class="text-green-500 font-black">✓</span> Incluido</td></tr>
+          <tr><td class="py-5 px-6 text-gray-800 font-bold">Sitio Web Personalizado</td><td class="py-5 px-6"><span class="text-green-500 font-black">✓</span> 1 página</td><td class="py-5 px-6"><span class="text-green-500 font-black">✓</span> Multi-sección</td></tr>
+          <tr><td class="py-5 px-6 text-gray-800 font-bold">Catálogo Interactivo</td><td class="py-5 px-6 text-gray-400"><span class="font-black">✘</span> No disponible</td><td class="py-5 px-6"><span class="text-green-500 font-black">✓</span> Hasta 50 productos</td></tr>
+          <tr><td class="py-5 px-6 text-gray-800 font-bold">Botón Pedido WhatsApp</td><td class="py-5 px-6 text-gray-500">Básico (Chat directo)</td><td class="py-5 px-6 text-green-600 font-bold">Avanzado (Pedido estructurado)</td></tr>
+          <tr><td class="py-5 px-6 text-gray-800 font-bold">QR Físico Premium</td><td class="py-5 px-6 text-gray-400">Digital solamente</td><td class="py-5 px-6"><span class="text-green-500 font-black">✓</span> Material impreso incluido</td></tr>
+          <tr><td class="py-5 px-6 text-gray-800 font-bold">Actualizaciones de Contenido</td><td class="py-5 px-6 text-gray-400">2 al mes</td><td class="py-5 px-6"><span class="text-green-500 font-black">✓</span> Ilimitadas</td></tr>
+          <tr><td class="py-5 px-6 text-gray-800 font-bold">Reporte de Visitas</td><td class="py-5 px-6 text-gray-400"><span class="font-black">✘</span> No disponible</td><td class="py-5 px-6"><span class="text-green-500 font-black">✓</span> Mensual por WhatsApp</td></tr>
+          <tr class="bg-blue-50/50"><td class="py-5 px-6 text-gray-900 font-black">Precio Mensual</td><td class="py-5 px-6 text-[#0047AB] font-black text-lg">$299 MXN</td><td class="py-5 px-6 text-amber-600 font-black text-lg">$799 MXN</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="mt-8 text-center reveal">
+      <a href="https://wa.me/529933440942?text=Quiero%20información%20sobre%20los%20planes%20de%20Nexo%20Local" target="_blank" rel="noopener" class="inline-block bg-[#0047AB] text-white px-10 py-4 rounded-2xl font-black text-sm uppercase tracking-wider hover:bg-blue-800 transition-colors shadow-xl shadow-blue-200">Quiero empezar con el Plan Cosecha →</a>
+    </div>
+  </div>
+</section>
+
+<!-- WHY NEXO -->
+<section class="py-20 bg-slate-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="text-center mb-12 reveal">
+      <div class="inline-block bg-blue-100 text-[#0047AB] text-xs font-black uppercase tracking-widest px-4 py-2 rounded-full mb-4">🧠 Por Qué Funciona</div>
+      <h2 class="text-4xl font-black text-gray-900">El Whole Product para PYMES</h2>
+      <p class="text-gray-400 font-medium mt-3 max-w-xl mx-auto">No vendemos software. Vendemos la infraestructura completa para el éxito de tu negocio.</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 reveal">
+      <div class="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow"><div class="text-4xl mb-5">📍</div><h3 class="text-lg font-black text-gray-900 mb-3">Visibilidad Inmediata</h3><p class="text-gray-500 text-sm leading-relaxed">Google Maps + sitio web en menos de 72 horas. Tu cliente te encuentra en la búsqueda "tacos cerca de mí" antes que a cualquier competidor.</p></div>
+      <div class="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow"><div class="text-4xl mb-5">📱</div><h3 class="text-lg font-black text-gray-900 mb-3">Conversión por WhatsApp</h3><p class="text-gray-500 text-sm leading-relaxed">Los pedidos llegan estructurados directamente al celular del dueño. Sin apps, sin complicaciones. El canal que ya usa toda la región.</p></div>
+      <div class="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow"><div class="text-4xl mb-5">📈</div><h3 class="text-lg font-black text-gray-900 mb-3">Ingreso Recurrente</h3><p class="text-gray-500 text-sm leading-relaxed">Modelo SaaS-local: cobras mensual, escalas sin límite. Con 85% de margen bruto y CAC de $200 MXN, la economía favorece el crecimiento.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="bg-[#0C0C1A] text-white py-20 px-4">
+  <div class="max-w-7xl mx-auto">
+    <div class="flex flex-col lg:flex-row justify-between items-center gap-12 mb-16">
+      <div class="text-center lg:text-left max-w-lg">
+        <h2 class="text-4xl md:text-5xl font-black mb-4 leading-tight">¿Vemos los números<br><span class="gradient-text">reales?</span></h2>
+        <p class="text-gray-400 leading-relaxed">Agenda una reunión técnica para revisar el modelo de rentabilidad y escalabilidad para tu región.</p>
+      </div>
+      <div class="flex flex-col sm:flex-row gap-4 w-full lg:w-auto">
+        <a href="https://wa.me/529933440942?text=Hola%2C%20quiero%20agendar%20una%20reunión%20para%20ver%20los%20números%20de%20Nexo%20Local" target="_blank" rel="noopener" class="pulse-ring bg-[#25D366] px-10 py-5 rounded-2xl font-black text-center shadow-xl hover:scale-105 transition-transform text-sm uppercase tracking-wider">💬 Hablar con el Fundador</a>
+        <a href="tel:+529933440942" class="bg-white/10 px-10 py-5 rounded-2xl font-black text-center border border-white/10 hover:bg-white/20 transition-colors text-sm uppercase tracking-wider">📞 Llamar Ahora</a>
+      </div>
+    </div>
+    <div class="pt-8 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center gap-4">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 bg-[#0047AB] rounded-lg flex items-center justify-center font-black text-white text-sm">N</div>
+        <span class="text-lg font-black text-white">Nexo<span class="text-[#FFBF00]">Local</span></span>
+      </div>
+      <p class="text-gray-500 text-xs font-bold uppercase tracking-widest text-center">Propiedad Intelectual 2024 · México</p>
+      <div class="flex items-center gap-2 text-gray-500 text-xs font-bold"><span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>Sitio activo</div>
+    </div>
+  </div>
+</footer>
+
+<!-- ══════════════════ DEMO MODAL ══════════════════ -->
+<div id="demoModal" class="modal-overlay" onclick="if(event.target===this)closeDemoModal()">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeDemoModal()">✕</button>
+    <div id="demoModalContent" class="p-6 md:p-8"></div>
+  </div>
+</div>
+
+<!-- ══════════════════ FORM MODAL ══════════════════ -->
+<div id="formModal" class="modal-overlay" onclick="if(event.target===this)closeFormModal()">
+  <div class="modal-box" style="max-width:520px;">
+    <button class="modal-close" onclick="closeFormModal()">✕</button>
+    <div class="p-6 md:p-8">
+      <div class="mb-6">
+        <div id="formBadge" class="inline-block text-[10px] font-black uppercase px-2.5 py-1 rounded-lg mb-3"></div>
+        <h3 class="text-2xl font-black text-gray-900 mb-1">Solicitar Plantilla</h3>
+        <p id="formTemplateName" class="text-[#0047AB] font-bold text-sm"></p>
+        <p class="text-gray-400 text-xs mt-2">Completa el formulario y te contactaremos en menos de 24 horas por WhatsApp.</p>
+      </div>
+      <form id="solicitudForm" class="space-y-4" onsubmit="submitForm(event)">
+        <div>
+          <label class="text-xs font-black uppercase text-gray-500 tracking-wider block mb-1.5">Nombre del Negocio *</label>
+          <input id="f_negocio" type="text" required placeholder="Ej: Tacos El Güero" class="form-field">
         </div>
-    </section>
-
-    <!-- ═══════════════════════════════════ COMPARATIVA ═══════════════════════════════════ -->
-    <section id="comparativa" class="py-24 bg-white border-y border-gray-100">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6">
-            <div class="text-center mb-16 reveal">
-                <div class="inline-block bg-gray-100 text-gray-500 text-xs font-black uppercase tracking-widest px-4 py-2 rounded-full mb-4">⚖️ Comparativa</div>
-                <h2 class="text-4xl font-black text-gray-900">Anatomía del Servicio</h2>
-                <p class="text-gray-400 font-medium mt-3">El "Cierre Silencioso": el cliente ve el porqué sin que tengas que convencerlo.</p>
-            </div>
-
-            <div class="overflow-x-auto rounded-3xl border border-gray-100 shadow-sm reveal">
-                <table class="w-full text-left border-collapse">
-                    <thead>
-                        <tr class="bg-gray-50">
-                            <th class="py-5 px-6 text-xs font-black uppercase text-gray-400 tracking-widest">Funcionalidad</th>
-                            <th class="py-5 px-6 text-xs font-black uppercase text-[#0047AB] tracking-widest">Plan Semilla<br><span class="text-gray-400 normal-case font-bold">$299 / mes</span></th>
-                            <th class="py-5 px-6 text-xs font-black uppercase text-amber-600 tracking-widest">Plan Cosecha<br><span class="text-gray-400 normal-case font-bold">$799 / mes</span></th>
-                        </tr>
-                    </thead>
-                    <tbody class="text-sm font-medium divide-y divide-gray-50">
-                        <tr>
-                            <td class="py-5 px-6 text-gray-800 font-bold">Registro en Google Maps</td>
-                            <td class="py-5 px-6"><span class="text-green-500 font-black">✓</span> Incluido</td>
-                            <td class="py-5 px-6"><span class="text-green-500 font-black">✓</span> Incluido</td>
-                        </tr>
-                        <tr>
-                            <td class="py-5 px-6 text-gray-800 font-bold">Sitio Web Personalizado</td>
-                            <td class="py-5 px-6"><span class="text-green-500 font-black">✓</span> 1 página</td>
-                            <td class="py-5 px-6"><span class="text-green-500 font-black">✓</span> Multi-sección</td>
-                        </tr>
-                        <tr>
-                            <td class="py-5 px-6 text-gray-800 font-bold">Catálogo Interactivo</td>
-                            <td class="py-5 px-6 text-gray-400"><span class="font-black">✘</span> No disponible</td>
-                            <td class="py-5 px-6"><span class="text-green-500 font-black">✓</span> Hasta 50 productos</td>
-                        </tr>
-                        <tr>
-                            <td class="py-5 px-6 text-gray-800 font-bold">Botón Pedido WhatsApp</td>
-                            <td class="py-5 px-6 text-gray-500">Básico (Chat directo)</td>
-                            <td class="py-5 px-6 text-green-600 font-bold">Avanzado (Pedido estructurado)</td>
-                        </tr>
-                        <tr>
-                            <td class="py-5 px-6 text-gray-800 font-bold">QR Físico Premium</td>
-                            <td class="py-5 px-6 text-gray-400">Digital solamente</td>
-                            <td class="py-5 px-6"><span class="text-green-500 font-black">✓</span> Material impreso incluido</td>
-                        </tr>
-                        <tr>
-                            <td class="py-5 px-6 text-gray-800 font-bold">Actualizaciones de Contenido</td>
-                            <td class="py-5 px-6 text-gray-400">2 al mes</td>
-                            <td class="py-5 px-6"><span class="text-green-500 font-black">✓</span> Ilimitadas</td>
-                        </tr>
-                        <tr>
-                            <td class="py-5 px-6 text-gray-800 font-bold">Reporte de Visitas</td>
-                            <td class="py-5 px-6 text-gray-400"><span class="font-black">✘</span> No disponible</td>
-                            <td class="py-5 px-6"><span class="text-green-500 font-black">✓</span> Mensual por WhatsApp</td>
-                        </tr>
-                        <tr class="bg-blue-50/50">
-                            <td class="py-5 px-6 text-gray-900 font-black">Precio Mensual</td>
-                            <td class="py-5 px-6 text-[#0047AB] font-black text-lg">$299 MXN</td>
-                            <td class="py-5 px-6 text-amber-600 font-black text-lg">$799 MXN</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="mt-8 text-center reveal">
-                <a href="https://wa.me/529933440942?text=Quiero%20información%20sobre%20los%20planes%20de%20Nexo%20Local"
-                   target="_blank" rel="noopener"
-                   class="inline-block bg-[#0047AB] text-white px-10 py-4 rounded-2xl font-black text-sm uppercase tracking-wider hover:bg-blue-800 transition-colors shadow-xl shadow-blue-200">
-                    Quiero empezar con el Plan Cosecha →
-                </a>
-            </div>
+        <div>
+          <label class="text-xs font-black uppercase text-gray-500 tracking-wider block mb-1.5">Nombre del Dueño *</label>
+          <input id="f_dueno" type="text" required placeholder="Nombre completo" class="form-field">
         </div>
-    </section>
-
-    <!-- ═══════════════════════════════════ WHY NEXO ═══════════════════════════════════ -->
-    <section class="py-20 bg-slate-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6">
-            <div class="text-center mb-12 reveal">
-                <div class="inline-block bg-blue-100 text-[#0047AB] text-xs font-black uppercase tracking-widest px-4 py-2 rounded-full mb-4">🧠 Por Qué Funciona</div>
-                <h2 class="text-4xl font-black text-gray-900">El Whole Product para PYMES</h2>
-                <p class="text-gray-400 font-medium mt-3 max-w-xl mx-auto">No vendemos software. Vendemos la infraestructura completa para el éxito de tu negocio.</p>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 reveal">
-                <div class="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm group hover:shadow-md transition-shadow">
-                    <div class="text-4xl mb-5">📍</div>
-                    <h3 class="text-lg font-black text-gray-900 mb-3">Visibilidad Inmediata</h3>
-                    <p class="text-gray-500 text-sm leading-relaxed">Google Maps + sitio web en menos de 72 horas. Tu cliente te encuentra en la búsqueda "tacos cerca de mí" antes que a cualquier competidor.</p>
-                </div>
-                <div class="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm group hover:shadow-md transition-shadow">
-                    <div class="text-4xl mb-5">📱</div>
-                    <h3 class="text-lg font-black text-gray-900 mb-3">Conversión por WhatsApp</h3>
-                    <p class="text-gray-500 text-sm leading-relaxed">Los pedidos llegan estructurados directamente al celular del dueño. Sin apps, sin complicaciones. El canal que ya usa toda Reforma.</p>
-                </div>
-                <div class="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm group hover:shadow-md transition-shadow">
-                    <div class="text-4xl mb-5">📈</div>
-                    <h3 class="text-lg font-black text-gray-900 mb-3">Ingreso Recurrente</h3>
-                    <p class="text-gray-500 text-sm leading-relaxed">Modelo SaaS-local: cobras mensual, escalas sin límite. Con 85% de margen bruto y CAC de $200 MXN, la economía favorece el crecimiento.</p>
-                </div>
-            </div>
+        <div>
+          <label class="text-xs font-black uppercase text-gray-500 tracking-wider block mb-1.5">WhatsApp *</label>
+          <input id="f_whatsapp" type="tel" required placeholder="+52 993 000 0000" class="form-field">
         </div>
-    </section>
-
-    <!-- ═══════════════════════════════════ FOOTER ═══════════════════════════════════ -->
-    <footer class="bg-[#0C0C1A] text-white py-20 px-4">
-        <div class="max-w-7xl mx-auto">
-            <div class="flex flex-col lg:flex-row justify-between items-center gap-12 mb-16">
-                <div class="text-center lg:text-left max-w-lg">
-                    <h2 class="text-4xl md:text-5xl font-black mb-4 leading-tight">¿Vemos los números<br><span class="gradient-text">reales?</span></h2>
-                    <p class="text-gray-400 leading-relaxed">Agenda una reunión técnica para revisar el modelo de rentabilidad y escalabilidad para Reforma, Chiapas.</p>
-                </div>
-                <div class="flex flex-col sm:flex-row gap-4 w-full lg:w-auto">
-                    <a href="https://wa.me/529933440942?text=Hola%2C%20quiero%20agendar%20una%20reuni%C3%B3n%20para%20ver%20los%20n%C3%BAmeros%20de%20Nexo%20Local"
-                       target="_blank" rel="noopener"
-                       class="pulse-ring bg-[#25D366] px-10 py-5 rounded-2xl font-black text-center shadow-xl hover:scale-105 transition-transform text-sm uppercase tracking-wider">
-                        💬 Hablar con el Fundador
-                    </a>
-                    <a href="tel:+529933440942"
-                       class="bg-white/10 px-10 py-5 rounded-2xl font-black text-center border border-white/10 hover:bg-white/20 transition-colors text-sm uppercase tracking-wider">
-                        📞 Llamar Ahora
-                    </a>
-                </div>
-            </div>
-
-            <div class="pt-8 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center gap-4">
-                <div class="flex items-center gap-3">
-                    <div class="w-8 h-8 bg-[#0047AB] rounded-lg flex items-center justify-center font-black text-white text-sm">N</div>
-                    <span class="text-lg font-black text-white">Nexo<span class="text-[#FFBF00]">Local</span></span>
-                </div>
-                <p class="text-gray-500 text-xs font-bold uppercase tracking-widest text-center">
-                    Propiedad Intelectual 2024 · Reforma, Chiapas, México
-                </p>
-                <div class="flex items-center gap-2 text-gray-500 text-xs font-bold">
-                    <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
-                    Sitio activo
-                </div>
-            </div>
+        <div>
+          <label class="text-xs font-black uppercase text-gray-500 tracking-wider block mb-1.5">Ciudad / Municipio *</label>
+          <input id="f_ciudad" type="text" required placeholder="Ej: Villahermosa, Tabasco" class="form-field">
         </div>
-    </footer>
+        <div>
+          <label class="text-xs font-black uppercase text-gray-500 tracking-wider block mb-1.5">Giro del Negocio</label>
+          <input id="f_giro" type="text" placeholder="Ej: Taquería, Boutique, Ferretería..." class="form-field">
+        </div>
+        <div>
+          <label class="text-xs font-black uppercase text-gray-500 tracking-wider block mb-1.5">Plan Elegido *</label>
+          <select id="f_plan" class="form-field">
+            <option value="Semilla ($299/mes)">🌱 Plan Semilla — $299 / mes</option>
+            <option value="Cosecha ($799/mes)">⭐ Plan Cosecha — $799 / mes</option>
+          </select>
+        </div>
+        <div>
+          <label class="text-xs font-black uppercase text-gray-500 tracking-wider block mb-1.5">¿Algo más que quieras agregar?</label>
+          <textarea id="f_notas" rows="2" placeholder="Colores, logo, redes sociales, etc." class="form-field resize-none"></textarea>
+        </div>
+        <input type="hidden" id="f_template">
+        <button type="submit" class="w-full bg-[#25D366] text-white py-4 rounded-2xl font-black text-sm uppercase tracking-wider hover:bg-green-500 transition-colors shadow-lg shadow-green-200 mt-2">
+          📲 Enviar por WhatsApp
+        </button>
+        <p class="text-center text-xs text-gray-400">Te abrirá WhatsApp con tu información pre-cargada.</p>
+      </form>
+    </div>
+  </div>
+</div>
 
-    <script>
-        // ─── TEMPLATE DATA ───────────────────────────────────────────────────────
-        const templates = [
-            { id: 1, type: 'taqueria', plan: 'semilla', name: 'El Paisa Express', emoji: '🌮', desc: 'Presencia inmediata. Google Maps + Botón de contacto directo por WhatsApp para nuevos clientes.', focus: 'Ubicación', color: 'blue' },
-            { id: 2, type: 'taqueria', plan: 'semilla', name: 'Trompo Real',       emoji: '🍖', desc: 'Tarjeta digital con menú en PDF compartible por WhatsApp. Sencillo y efectivo.', focus: 'Simplicidad', color: 'blue' },
-            { id: 3, type: 'taqueria', plan: 'cosecha', name: 'La Fogata Pro',      emoji: '🔥', desc: 'Catálogo de pedidos desglosado con personalizaciones (con/sin cebolla). Pedidos directo al chef.', focus: 'Ventas', color: 'amber' },
-            { id: 4, type: 'taqueria', plan: 'cosecha', name: 'Los Cuñados',        emoji: '🥘', desc: 'Especialista en combos y promociones nocturnas. Incrementa el ticket promedio por pedido.', focus: 'Ticket', color: 'amber' },
-            { id: 5, type: 'restaurante', plan: 'semilla', name: 'Fonda Doña Lupe', emoji: '🥗', desc: 'Muestra el menú del día de forma clara y rápida. Genera confianza antes de que el cliente llegue.', focus: 'Confianza', color: 'blue' },
-            { id: 6, type: 'restaurante', plan: 'cosecha', name: 'Gourmet Reforma', emoji: '🍽️', desc: 'Reservaciones por formulario y catálogo visual de platillos con fotos premium. Posicionamiento de marca.', focus: 'Prestigio', color: 'amber' },
-            { id: 7, type: 'boutique', plan: 'semilla', name: 'Chic Local',         emoji: '👗', desc: 'Vitrina digital que conecta directamente con Instagram. Amplía el alcance en redes sin esfuerzo.', focus: 'Alcance', color: 'blue' },
-            { id: 8, type: 'boutique', plan: 'cosecha', name: 'Elegancia Chiapas',  emoji: '👠', desc: 'Catálogo de stock con tallas, colores e inventario interactivo. Convierte visitas en ventas.', focus: 'Conversión', color: 'amber' },
-            { id: 9, type: 'ferreteria', plan: 'semilla', name: 'El Martillo',      emoji: '🔨', desc: 'Directorio de servicios y productos con ubicación estratégica en Google Maps. Captura búsquedas locales.', focus: 'Servicio', color: 'blue' },
-            { id: 10, type: 'ferreteria', plan: 'cosecha', name: 'Constru-Pronto',  emoji: '🏗️', desc: 'Generador de cotizaciones para contratistas y clientes profesionales. Ahorra tiempo, aumenta cierres.', focus: 'Eficiencia', color: 'amber' }
-        ];
+<script>
+// ─── DATA ─────────────────────────────────────────────────────────────────────
+const templates = [
+  { id:1, type:'taqueria', plan:'semilla', name:'El Paisa Express', emoji:'🌮', desc:'Presencia inmediata. Google Maps + Botón de contacto directo por WhatsApp para nuevos clientes.', focus:'Ubicación',
+    demo:{ color:'#e74c3c', heroTitle:'El Paisa Express', heroSub:'Los mejores tacos de la región', items:[], cta:'¿Dónde estamos?' }},
+  { id:2, type:'taqueria', plan:'semilla', name:'Trompo Real', emoji:'🍖', desc:'Tarjeta digital con menú en PDF compartible por WhatsApp. Sencillo y efectivo.', focus:'Simplicidad',
+    demo:{ color:'#c0392b', heroTitle:'Trompo Real', heroSub:'Sabor auténtico al pastor', items:[], cta:'Ver Menú PDF' }},
+  { id:3, type:'taqueria', plan:'cosecha', name:'La Fogata Pro', emoji:'🔥', desc:'Catálogo de pedidos desglosado con personalizaciones (con/sin cebolla). Pedidos directo al chef.', focus:'Ventas',
+    demo:{ color:'#d35400', heroTitle:'La Fogata Pro', heroSub:'Pide en línea, recoge en minutos', items:['Taco al Pastor $25','Taco de Bistec $28','Quesadilla $35','Orden de Suadero $55'], cta:'Hacer Pedido' }},
+  { id:4, type:'taqueria', plan:'cosecha', name:'Los Cuñados', emoji:'🥘', desc:'Especialista en combos y promociones nocturnas. Incrementa el ticket promedio por pedido.', focus:'Ticket',
+    demo:{ color:'#8e44ad', heroTitle:'Los Cuñados', heroSub:'Combos desde $89 · Abierto hasta las 2AM', items:['Combo Familiar x6 $149','Combo Pareja x3 $89','Orden Especial $120','Bebida Incluida +$20'], cta:'Pedir Combo' }},
+  { id:5, type:'restaurante', plan:'semilla', name:'Fonda Doña Lupe', emoji:'🥗', desc:'Muestra el menú del día de forma clara y rápida. Genera confianza antes de que el cliente llegue.', focus:'Confianza',
+    demo:{ color:'#27ae60', heroTitle:'Fonda Doña Lupe', heroSub:'Menú del día casero y nutritivo', items:[], cta:'Ver Horarios' }},
+  { id:6, type:'restaurante', plan:'cosecha', name:'Gourmet Chiapas', emoji:'🍽️', desc:'Reservaciones por formulario y catálogo visual de platillos con fotos premium. Posicionamiento de marca.', focus:'Prestigio',
+    demo:{ color:'#2c3e50', heroTitle:'Gourmet Chiapas', heroSub:'Alta cocina regional · Reserva tu mesa', items:['Caldo Tlalpeño $120','Pollo en Mole $180','Filete Tampiquena $250','Postre del Chef $85'], cta:'Reservar Mesa' }},
+  { id:7, type:'boutique', plan:'semilla', name:'Chic Local', emoji:'👗', desc:'Vitrina digital que conecta directamente con Instagram. Amplía el alcance en redes sin esfuerzo.', focus:'Alcance',
+    demo:{ color:'#e91e8c', heroTitle:'Chic Local', heroSub:'Moda que habla por ti', items:[], cta:'Ver Instagram' }},
+  { id:8, type:'boutique', plan:'cosecha', name:'Elegancia Chiapas', emoji:'👠', desc:'Catálogo de stock con tallas, colores e inventario interactivo. Convierte visitas en ventas.', focus:'Conversión',
+    demo:{ color:'#9b59b6', heroTitle:'Elegancia Chiapas', heroSub:'Tu estilo, a un clic. Envíos locales', items:['Vestido Floral T.S/M/L $399','Blusa Seda $249','Jeans Premium $459','Accesorios desde $89'], cta:'Ver Catálogo' }},
+  { id:9, type:'ferreteria', plan:'semilla', name:'El Martillo', emoji:'🔨', desc:'Directorio de servicios y productos con ubicación estratégica en Google Maps. Captura búsquedas locales.', focus:'Servicio',
+    demo:{ color:'#f39c12', heroTitle:'El Martillo', heroSub:'Todo para tu obra · Materiales y herramientas', items:[], cta:'¿Cómo llegamos?' }},
+  { id:10, type:'ferreteria', plan:'cosecha', name:'Constru-Pronto', emoji:'🏗️', desc:'Generador de cotizaciones para contratistas y clientes profesionales. Ahorra tiempo, aumenta cierres.', focus:'Eficiencia',
+    demo:{ color:'#e67e22', heroTitle:'Constru-Pronto', heroSub:'Cotiza en línea · Entrega express', items:['Varilla 3/8" (12m) $320','Block $8 c/u','Cemento 50kg $145','Manguera 1/2" $185/m'], cta:'Cotizar Ahora' }}
+];
 
-        // ─── FILTER + RENDER ─────────────────────────────────────────────────────
-        function filterType(type, clickedBtn) {
-            const container = document.getElementById('templateContainer');
-            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-            if (clickedBtn) clickedBtn.classList.add('active');
+// ─── RENDER CARDS ─────────────────────────────────────────────────────────────
+function filterType(type, btn){
+  const container=document.getElementById('templateContainer');
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  const filtered=type==='todas'?templates:templates.filter(t=>t.type===type);
+  container.style.cssText='opacity:0;transform:translateY(10px);transition:opacity .2s ease,transform .2s ease;';
+  setTimeout(()=>{
+    container.innerHTML='';
+    filtered.forEach((t,i)=>{
+      const isCos=t.plan==='cosecha';
+      const el=document.createElement('div');
+      el.className='template-card bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden flex flex-col';
+      el.innerHTML=`
+        <div class="p-6 flex flex-col flex-grow">
+          <div class="flex justify-between items-start mb-6">
+            <span class="text-4xl">${t.emoji}</span>
+            <span class="text-[10px] font-black uppercase px-2.5 py-1 rounded-lg ${isCos?'badge-cosecha':'badge-semilla'}">${isCos?'⭐ Cosecha':'🌱 Semilla'}</span>
+          </div>
+          <div class="flex items-center gap-2 mb-1">
+            <span class="text-[10px] bg-gray-100 text-gray-400 font-black px-2 py-0.5 rounded-md uppercase">#${String(t.id).padStart(2,'0')}</span>
+            <span class="text-[10px] font-black uppercase text-gray-300">${t.type}</span>
+          </div>
+          <h4 class="text-lg font-black text-gray-900 mb-3">${t.name}</h4>
+          <p class="text-xs text-gray-500 font-medium leading-relaxed flex-grow">${t.desc}</p>
+          <div class="mt-5"><span class="text-[10px] bg-blue-50 text-blue-500 font-black px-2.5 py-1 rounded-lg uppercase tracking-wider">🎯 ${t.focus}</span></div>
+        </div>
+        <div class="px-6 pb-6 flex flex-col gap-2.5">
+          <button onclick="openDemo(${t.id})" class="block w-full bg-[#0047AB] text-white border border-transparent py-3.5 rounded-2xl text-xs font-black uppercase tracking-wider hover:bg-blue-800 transition-all text-center">👁 Visualizar Demo</button>
+          <button onclick="openForm(${t.id})" class="block w-full bg-slate-50 border border-blue-50 py-3.5 rounded-2xl text-xs font-black text-[#0047AB] hover:bg-blue-50 transition-all text-center uppercase tracking-wider">Solicitar esta plantilla</button>
+        </div>`;
+      container.appendChild(el);
+    });
+    container.style.cssText='opacity:1;transform:translateY(0);transition:opacity .3s ease,transform .3s ease;';
+  },200);
+}
 
-            const filtered = type === 'todas' ? templates : templates.filter(t => t.type === type);
+// ─── BUILD DEMO PREVIEW ───────────────────────────────────────────────────────
+function buildPreview(t){
+  const d=t.demo; const isCos=t.plan==='cosecha';
+  const itemsHTML=d.items.length?`
+    <div style="padding:16px 20px;border-top:1px solid #f1f5f9;">
+      <p style="font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.1em;color:#94a3b8;margin-bottom:10px;">${isCos?'📋 Catálogo de Productos':'📄 Menú'}</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+        ${d.items.map(item=>`<div style="background:#f8fafc;border-radius:10px;padding:10px 12px;font-size:11px;font-weight:700;color:#374151;">${item}</div>`).join('')}
+      </div>
+    </div>`:'';
 
-            // Fade out
-            container.style.opacity = '0';
-            container.style.transform = 'translateY(10px)';
-            container.style.transition = 'opacity 0.2s ease, transform 0.2s ease';
+  const waSection=isCos?`
+    <div style="padding:14px 20px;background:#f0fdf4;border-top:1px solid #dcfce7;">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="background:#25D366;color:#fff;border-radius:10px;padding:10px 16px;font-size:11px;font-weight:900;cursor:pointer;">📲 Pedido Estructurado por WhatsApp</div>
+        <div style="font-size:10px;color:#6b7280;">Solicita con detalles exactos</div>
+      </div>
+    </div>`:`
+    <div style="padding:14px 20px;background:#f0fdf4;border-top:1px solid #dcfce7;">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="background:#25D366;color:#fff;border-radius:10px;padding:10px 16px;font-size:11px;font-weight:900;cursor:pointer;">💬 Chat por WhatsApp</div>
+        <div style="font-size:10px;color:#6b7280;">Contacto directo</div>
+      </div>
+    </div>`;
 
-            setTimeout(() => {
-                container.innerHTML = '';
-                filtered.forEach((t, i) => {
-                    const isCosecha = t.plan === 'cosecha';
-                    const card = document.createElement('div');
-                    card.className = 'template-card bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden flex flex-col';
-                    card.style.animationDelay = `${i * 40}ms`;
-                    card.innerHTML = `
-                        <div class="p-6 flex flex-col flex-grow">
-                            <div class="flex justify-between items-start mb-6">
-                                <span class="text-4xl">${t.emoji}</span>
-                                <span class="text-[10px] font-black uppercase px-2.5 py-1 rounded-lg ${isCosecha ? 'badge-cosecha' : 'badge-semilla'}">
-                                    ${isCosecha ? '⭐ Cosecha' : '🌱 Semilla'}
-                                </span>
-                            </div>
-                            <div class="flex items-center gap-2 mb-1">
-                                <span class="text-[10px] bg-gray-100 text-gray-400 font-black px-2 py-0.5 rounded-md uppercase">#${String(t.id).padStart(2,'0')}</span>
-                                <span class="text-[10px] font-black uppercase text-gray-300">${t.type}</span>
-                            </div>
-                            <h4 class="text-lg font-black text-gray-900 mb-3">${t.name}</h4>
-                            <p class="text-xs text-gray-500 font-medium leading-relaxed flex-grow">${t.desc}</p>
-                            <div class="mt-5 flex items-center gap-2">
-                                <span class="text-[10px] bg-blue-50 text-blue-500 font-black px-2.5 py-1 rounded-lg uppercase tracking-wider">🎯 ${t.focus}</span>
-                            </div>
-                        </div>
-                        <div class="px-6 pb-6">
-                            <a href="https://wa.me/529933440942?text=Quiero%20la%20plantilla%20${encodeURIComponent(t.name)}%20de%20Nexo%20Local"
-                               target="_blank" rel="noopener"
-                               class="block w-full bg-slate-50 border border-blue-50 py-3.5 rounded-2xl text-xs font-black text-[#0047AB] hover:bg-[#0047AB] hover:text-white hover:border-transparent transition-all text-center uppercase tracking-wider">
-                                Solicitar esta plantilla
-                            </a>
-                        </div>
-                    `;
-                    container.appendChild(card);
-                });
+  const catalogoBadge=isCos?`<div style="background:#fef3c7;color:#92400e;border-radius:6px;padding:3px 8px;font-size:9px;font-weight:900;text-transform:uppercase;">⭐ Plan Cosecha</div>`:`<div style="background:#f1f5f9;color:#475569;border-radius:6px;padding:3px 8px;font-size:9px;font-weight:900;text-transform:uppercase;">🌱 Plan Semilla</div>`;
 
-                // Fade in
-                container.style.opacity = '1';
-                container.style.transform = 'translateY(0)';
-            }, 200);
-        }
+  return `
+    <div class="browser-frame">
+      <div class="browser-bar">
+        <div class="browser-dot" style="background:#ff5f57"></div>
+        <div class="browser-dot" style="background:#febc2e"></div>
+        <div class="browser-dot" style="background:#28c840"></div>
+        <div class="browser-url">nexolocal.lat/${t.name.toLowerCase().replace(/\s/g,'-')}</div>
+        ${catalogoBadge}
+      </div>
+      <div class="preview-content">
+        <!-- Header simulado -->
+        <div style="background:${d.color};padding:18px 20px;display:flex;justify-content:space-between;align-items:center;">
+          <div>
+            <h4 style="font-family:Montserrat,sans-serif;font-weight:900;color:#fff;font-size:16px;margin:0;">${t.emoji} ${d.heroTitle}</h4>
+            <p style="color:rgba(255,255,255,.7);font-size:10px;margin:3px 0 0;font-weight:600;">${d.heroSub}</p>
+          </div>
+          <div style="background:rgba(255,255,255,.2);color:#fff;border-radius:8px;padding:6px 12px;font-size:10px;font-weight:900;border:1px solid rgba(255,255,255,.3);">${d.cta}</div>
+        </div>
+        <!-- Mapa simulado -->
+        <div style="background:linear-gradient(135deg,#e2e8f0,#f1f5f9);padding:12px 20px;display:flex;align-items:center;gap:10px;border-bottom:1px solid #f1f5f9;">
+          <span style="font-size:18px;">📍</span>
+          <div>
+            <p style="font-size:10px;font-weight:900;color:#374151;margin:0;">Ubicación verificada en Google Maps</p>
+            <p style="font-size:9px;color:#94a3b8;margin:2px 0 0;">Toca para ver direcciones</p>
+          </div>
+          <div style="margin-left:auto;background:#0047AB;color:#fff;border-radius:8px;padding:5px 10px;font-size:9px;font-weight:900;">Cómo llegar</div>
+        </div>
+        ${itemsHTML}
+        ${waSection}
+        ${isCos?`<div style="padding:12px 20px;background:#fafafa;border-top:1px solid #f1f5f9;display:flex;gap:8px;align-items:center;">
+          <span style="font-size:12px;">📊</span>
+          <p style="font-size:9px;color:#94a3b8;margin:0;font-weight:600;">Reporte mensual de visitas incluido · QR físico premium entregado</p>
+        </div>`:''}
+      </div>
+    </div>`;
+}
 
-        // ─── MRR CHART ───────────────────────────────────────────────────────────
-        function initCharts() {
-            const ctx = document.getElementById('mrrChart').getContext('2d');
-            new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: ['Mes 1', 'Mes 2', 'Mes 3', 'Mes 4', 'Mes 5', 'Mes 6', 'Mes 7', 'Mes 8'],
-                    datasets: [
-                        {
-                            label: 'Plan Cosecha (MRR)',
-                            data: [15000, 35000, 75000, 120000, 155000, 190000, 220000, 250000],
-                            borderColor: '#0047AB',
-                            backgroundColor: 'rgba(0, 71, 171, 0.07)',
-                            borderWidth: 3,
-                            fill: true,
-                            tension: 0.45,
-                            pointRadius: 4,
-                            pointBackgroundColor: '#0047AB',
-                            pointBorderColor: '#fff',
-                            pointBorderWidth: 2
-                        },
-                        {
-                            label: 'Plan Semilla (MRR)',
-                            data: [5000, 15000, 25000, 35000, 42000, 50000, 58000, 65000],
-                            borderColor: '#FFBF00',
-                            borderWidth: 2,
-                            borderDash: [6, 4],
-                            fill: false,
-                            tension: 0.45,
-                            pointRadius: 4,
-                            pointBackgroundColor: '#FFBF00',
-                            pointBorderColor: '#fff',
-                            pointBorderWidth: 2
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    interaction: { mode: 'index', intersect: false },
-                    plugins: {
-                        legend: {
-                            position: 'bottom',
-                            labels: { font: { weight: 'bold', size: 11 }, padding: 20, usePointStyle: true }
-                        },
-                        tooltip: {
-                            backgroundColor: '#1E1E1E',
-                            titleFont: { weight: 'bold' },
-                            callbacks: {
-                                label: ctx => ` $${ctx.raw.toLocaleString('es-MX')} MXN`
-                            }
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            grid: { color: 'rgba(0,0,0,0.04)', drawBorder: false },
-                            ticks: {
-                                font: { weight: 'bold', size: 10 },
-                                color: '#94a3b8',
-                                callback: v => '$' + (v/1000) + 'k'
-                            }
-                        },
-                        x: {
-                            grid: { display: false },
-                            ticks: { font: { weight: 'bold', size: 10 }, color: '#94a3b8' }
-                        }
-                    }
-                }
-            });
-        }
+// ─── OPEN / CLOSE DEMO ────────────────────────────────────────────────────────
+function openDemo(id){
+  const t=templates.find(x=>x.id===id);
+  const isCos=t.plan==='cosecha';
+  document.getElementById('demoModalContent').innerHTML=`
+    <div class="flex items-center justify-between mb-6">
+      <div>
+        <span class="text-[10px] font-black uppercase px-2.5 py-1 rounded-lg mr-3 ${isCos?'badge-cosecha':'badge-semilla'}">${isCos?'⭐ Plan Cosecha':'🌱 Plan Semilla'}</span>
+        <span class="text-xs text-gray-400 font-bold">#${String(t.id).padStart(2,'0')} · ${t.type}</span>
+      </div>
+      <span class="text-2xl">${t.emoji}</span>
+    </div>
+    <h3 class="text-2xl font-black text-gray-900 mb-1">${t.name}</h3>
+    <p class="text-gray-400 text-sm mb-6">${t.desc}</p>
+    <div class="mb-3 flex items-center gap-2">
+      <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse inline-block"></span>
+      <span class="text-xs font-black text-gray-400 uppercase tracking-wider">Preview Interactivo</span>
+    </div>
+    ${buildPreview(t)}
+    <div class="mt-6 flex flex-col sm:flex-row gap-3">
+      <button onclick="closeDemoModal();openForm(${t.id})" class="flex-1 bg-[#0047AB] text-white py-4 rounded-2xl font-black text-sm uppercase tracking-wider hover:bg-blue-800 transition-colors text-center">Solicitar esta plantilla →</button>
+      <button onclick="closeDemoModal()" class="flex-1 bg-gray-100 text-gray-600 py-4 rounded-2xl font-black text-sm uppercase tracking-wider hover:bg-gray-200 transition-colors text-center">Cerrar</button>
+    </div>`;
+  document.getElementById('demoModal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeDemoModal(){
+  document.getElementById('demoModal').classList.remove('open');
+  document.body.style.overflow='';
+}
 
-        // ─── SCROLL REVEAL ────────────────────────────────────────────────────────
-        function initReveal() {
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-            }, { threshold: 0.1 });
-            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-        }
+// ─── OPEN / CLOSE FORM ────────────────────────────────────────────────────────
+function openForm(id){
+  const t=templates.find(x=>x.id===id);
+  const isCos=t.plan==='cosecha';
+  const badge=document.getElementById('formBadge');
+  badge.textContent=isCos?'⭐ Plan Cosecha':'🌱 Plan Semilla';
+  badge.className='inline-block text-[10px] font-black uppercase px-2.5 py-1 rounded-lg mb-3 '+(isCos?'badge-cosecha':'badge-semilla');
+  document.getElementById('formTemplateName').textContent=t.emoji+' '+t.name;
+  document.getElementById('f_template').value=t.name;
+  document.getElementById('f_plan').value=isCos?'Cosecha ($799/mes)':'Semilla ($299/mes)';
+  document.getElementById('formModal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeFormModal(){
+  document.getElementById('formModal').classList.remove('open');
+  document.body.style.overflow='';
+}
 
-        // ─── INIT ─────────────────────────────────────────────────────────────────
-        window.addEventListener('DOMContentLoaded', () => {
-            // Set first filter button active
-            const firstBtn = document.querySelector('.filter-btn');
-            filterType('todas', firstBtn);
-            initCharts();
-            initReveal();
-        });
-    </script>
+// ─── FORM SUBMIT → WHATSAPP ───────────────────────────────────────────────────
+function submitForm(e){
+  e.preventDefault();
+  const neg=document.getElementById('f_negocio').value;
+  const due=document.getElementById('f_dueno').value;
+  const wa=document.getElementById('f_whatsapp').value;
+  const ciu=document.getElementById('f_ciudad').value;
+  const giro=document.getElementById('f_giro').value;
+  const plan=document.getElementById('f_plan').value;
+  const notas=document.getElementById('f_notas').value;
+  const tpl=document.getElementById('f_template').value;
+  const msg=`Hola, me interesa la plantilla *${tpl}* de Nexo Local.\n\n*Negocio:* ${neg}\n*Dueño:* ${due}\n*WhatsApp:* ${wa}\n*Ciudad:* ${ciu}\n*Giro:* ${giro||'No especificado'}\n*Plan:* ${plan}\n*Notas:* ${notas||'Ninguna'}`;
+  window.open('https://wa.me/529933440942?text='+encodeURIComponent(msg),'_blank');
+  closeFormModal();
+}
+
+// ─── CHART ────────────────────────────────────────────────────────────────────
+function initCharts(){
+  const ctx=document.getElementById('mrrChart').getContext('2d');
+  new Chart(ctx,{
+    type:'line',
+    data:{
+      labels:['Mes 1','Mes 2','Mes 3','Mes 4','Mes 5','Mes 6','Mes 7','Mes 8'],
+      datasets:[
+        {label:'Plan Cosecha (MRR)',data:[15000,35000,75000,120000,155000,190000,220000,250000],borderColor:'#0047AB',backgroundColor:'rgba(0,71,171,0.07)',borderWidth:3,fill:true,tension:.45,pointRadius:4,pointBackgroundColor:'#0047AB',pointBorderColor:'#fff',pointBorderWidth:2},
+        {label:'Plan Semilla (MRR)',data:[5000,15000,25000,35000,42000,50000,58000,65000],borderColor:'#FFBF00',borderWidth:2,borderDash:[6,4],fill:false,tension:.45,pointRadius:4,pointBackgroundColor:'#FFBF00',pointBorderColor:'#fff',pointBorderWidth:2}
+      ]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      interaction:{mode:'index',intersect:false},
+      plugins:{
+        legend:{position:'bottom',labels:{font:{weight:'bold',size:11},padding:20,usePointStyle:true}},
+        tooltip:{backgroundColor:'#1E1E1E',titleFont:{weight:'bold'},callbacks:{label:c=>` $${c.raw.toLocaleString('es-MX')} MXN`}}
+      },
+      scales:{
+        y:{beginAtZero:true,grid:{color:'rgba(0,0,0,0.04)'},ticks:{font:{weight:'bold',size:10},color:'#94a3b8',callback:v=>'$'+(v/1000)+'k'}},
+        x:{grid:{display:false},ticks:{font:{weight:'bold',size:10},color:'#94a3b8'}}
+      }
+    }
+  });
+}
+
+// ─── SCROLL REVEAL ────────────────────────────────────────────────────────────
+function initReveal(){
+  const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');}),{threshold:.1});
+  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+}
+
+// ─── ESC KEY ──────────────────────────────────────────────────────────────────
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeDemoModal();closeFormModal();}});
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+window.addEventListener('DOMContentLoaded',()=>{
+  filterType('todas',document.querySelector('.filter-btn'));
+  initCharts();
+  initReveal();
+});
+</script>
 </body>
 </html>
