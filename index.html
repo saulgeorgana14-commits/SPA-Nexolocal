@@ -1,210 +1,478 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nexo Local — Plantillas Demo para PYMEs</title>
-<meta name="description" content="Vitrina interactiva de plantillas web Nexo Local. 5 modelos reales listos para PYMES en LATAM.">
-<script src="https://cdn.tailwindcss.com"></script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
-<style>
-:root{--azul:#0047AB;--ambar:#FFBF00;--slate:#1E1E1E;}
-*{box-sizing:border-box;}
-body{font-family:'Open Sans',sans-serif;background:#f8fafc;color:#1e293b;}
-h1,h2,h3,h4{font-family:'Montserrat',sans-serif;}
-html{scroll-behavior:smooth;}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nexo Local — Plantillas Demo para PYMEs</title>
+  <meta name="description"
+    content="Vitrina interactiva de plantillas web Nexo Local. 5 modelos reales listos para PYMES en LATAM.">
+  <link rel="icon" type="image/svg+xml" href="ICONO.svg">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Open+Sans:wght@400;600&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --azul: #0047AB;
+      --ambar: #FFBF00;
+      --slate: #1E1E1E;
+    }
 
-.hero-gradient{background:linear-gradient(135deg,#0047AB 0%,#002D6B 60%,#001a40 100%);}
-.gradient-text{background:linear-gradient(90deg,#FFBF00,#FFD700,#FFBF00);background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer 3s linear infinite;}
-@keyframes shimmer{to{background-position:200% center;}}
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background: #f8fafc;
+      color: #1e293b;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    .hero-gradient {
+      background: linear-gradient(135deg, #0047AB 0%, #002D6B 60%, #001a40 100%);
+    }
+
+    .gradient-text {
+      background: linear-gradient(90deg, #FFBF00, #FFD700, #FFBF00);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: shimmer 3s linear infinite;
+    }
+
+    @keyframes shimmer {
+      to {
+        background-position: 200% center;
+      }
+    }
 
 
 
-.template-card{transition:all 0.4s cubic-bezier(0.175,0.885,0.32,1.275);}
-.template-card:hover{transform:translateY(-10px) scale(1.02);box-shadow:0 25px 50px -12px rgba(0,71,171,0.15);}
+    .template-card {
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
 
-.filter-btn{background:transparent;color:#64748b;cursor:pointer;border:none;transition:all 0.25s ease;}
-.filter-btn:hover{color:#0047AB;}
-.filter-btn.active{background-color:#0047AB;color:white;box-shadow:0 4px 14px 0 rgba(0,71,171,0.35);}
+    .template-card:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 25px 50px -12px rgba(0, 71, 171, 0.15);
+    }
 
-.badge-semilla{background:#f1f5f9;color:#475569;border:1px solid #e2e8f0;}
-.badge-cosecha{background:#fef3c7;color:#92400e;border:1px solid #fde68a;}
+    .filter-btn {
+      background: transparent;
+      color: #64748b;
+      cursor: pointer;
+      border: none;
+      transition: all 0.25s ease;
+    }
 
-.particle{position:absolute;border-radius:50%;opacity:.12;animation:float 8s ease-in-out infinite;}
-@keyframes float{0%,100%{transform:translateY(0) rotate(0deg);}50%{transform:translateY(-30px) rotate(180deg);}}
+    .filter-btn:hover {
+      color: #0047AB;
+    }
 
-.pulse-ring{animation:pulse-ring 2s ease-out infinite;}
-@keyframes pulse-ring{0%{box-shadow:0 0 0 0 rgba(37,211,102,.4);}70%{box-shadow:0 0 0 16px rgba(37,211,102,0);}100%{box-shadow:0 0 0 0 rgba(37,211,102,0);}}
+    .filter-btn.active {
+      background-color: #0047AB;
+      color: white;
+      box-shadow: 0 4px 14px 0 rgba(0, 71, 171, 0.35);
+    }
 
-.reveal{opacity:0;transform:translateY(30px);transition:opacity .6s ease,transform .6s ease;}
-.reveal.visible{opacity:1;transform:translateY(0);}
+    .badge-semilla {
+      background: #f1f5f9;
+      color: #475569;
+      border: 1px solid #e2e8f0;
+    }
 
-nav{backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);}
-tbody tr{transition:background .2s ease;}
-tbody tr:hover{background:#f8fafc;}
+    .badge-cosecha {
+      background: #fef3c7;
+      color: #92400e;
+      border: 1px solid #fde68a;
+    }
 
-/* MODAL OVERLAY */
-.modal-overlay{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.6);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);padding:16px;opacity:0;pointer-events:none;transition:opacity .3s ease;}
-.modal-overlay.open{opacity:1;pointer-events:all;}
-.modal-box{background:#fff;border-radius:2rem;width:100%;max-width:960px;max-height:92vh;overflow-y:auto;position:relative;transform:translateY(30px);transition:transform .3s ease;box-shadow:0 40px 80px rgba(0,0,0,.3);}
-.modal-overlay.open .modal-box{transform:translateY(0);}
-.modal-close{position:absolute;top:20px;right:20px;z-index:10;background:#f1f5f9;border:none;width:36px;height:36px;border-radius:50%;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s;}
-.modal-close:hover{background:#e2e8f0;}
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      opacity: .12;
+      animation: float 8s ease-in-out infinite;
+    }
 
-/* BROWSER FRAME */
-.browser-frame{background:#1e293b;border-radius:1.25rem;overflow:hidden;box-shadow:0 20px 40px rgba(0,0,0,.25);}
-.browser-bar{background:#0f172a;padding:10px 16px;display:flex;align-items:center;gap:8px;}
-.browser-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
-.browser-url{background:#1e293b;color:#94a3b8;font-size:11px;font-weight:bold;padding:4px 12px;border-radius:20px;flex:1;text-align:center;font-family:monospace;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.preview-iframe{width:100%;height:520px;border:none;display:block;background:#fff;}
+    @keyframes float {
 
-/* FORM MODAL */
-.form-field{width:100%;border:2px solid #e2e8f0;border-radius:.75rem;padding:.75rem 1rem;font-family:'Open Sans',sans-serif;font-size:.875rem;transition:border .2s;}
-.form-field:focus{outline:none;border-color:#0047AB;}
+      0%,
+      100% {
+        transform: translateY(0) rotate(0deg);
+      }
 
-/* DEMO CARD PREVIEW STRIP */
-.demo-preview-strip{height:140px;display:flex;align-items:center;justify-content:center;font-size:72px;position:relative;overflow:hidden;}
-</style>
+      50% {
+        transform: translateY(-30px) rotate(180deg);
+      }
+    }
+
+    .pulse-ring {
+      animation: pulse-ring 2s ease-out infinite;
+    }
+
+    @keyframes pulse-ring {
+      0% {
+        box-shadow: 0 0 0 0 rgba(37, 211, 102, .4);
+      }
+
+      70% {
+        box-shadow: 0 0 0 16px rgba(37, 211, 102, 0);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+      }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    nav {
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    tbody tr {
+      transition: background .2s ease;
+    }
+
+    tbody tr:hover {
+      background: #f8fafc;
+    }
+
+    /* MODAL OVERLAY */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, .6);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      padding: 16px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .3s ease;
+    }
+
+    .modal-overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .modal-box {
+      background: #fff;
+      border-radius: 2rem;
+      width: 100%;
+      max-width: 960px;
+      max-height: 92vh;
+      overflow-y: auto;
+      position: relative;
+      transform: translateY(30px);
+      transition: transform .3s ease;
+      box-shadow: 0 40px 80px rgba(0, 0, 0, .3);
+    }
+
+    .modal-overlay.open .modal-box {
+      transform: translateY(0);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      z-index: 10;
+      background: #f1f5f9;
+      border: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      font-size: 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background .2s;
+    }
+
+    .modal-close:hover {
+      background: #e2e8f0;
+    }
+
+    /* BROWSER FRAME */
+    .browser-frame {
+      background: #1e293b;
+      border-radius: 1.25rem;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, .25);
+    }
+
+    .browser-bar {
+      background: #0f172a;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .browser-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .browser-url {
+      background: #1e293b;
+      color: #94a3b8;
+      font-size: 11px;
+      font-weight: bold;
+      padding: 4px 12px;
+      border-radius: 20px;
+      flex: 1;
+      text-align: center;
+      font-family: monospace;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .preview-iframe {
+      width: 100%;
+      height: 520px;
+      border: none;
+      display: block;
+      background: #fff;
+    }
+
+    /* FORM MODAL */
+    .form-field {
+      width: 100%;
+      border: 2px solid #e2e8f0;
+      border-radius: .75rem;
+      padding: .75rem 1rem;
+      font-family: 'Open Sans', sans-serif;
+      font-size: .875rem;
+      transition: border .2s;
+    }
+
+    .form-field:focus {
+      outline: none;
+      border-color: #0047AB;
+    }
+
+    /* DEMO CARD PREVIEW STRIP */
+    .demo-preview-strip {
+      height: 140px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 72px;
+      position: relative;
+      overflow: hidden;
+    }
+  </style>
 </head>
+
 <body class="antialiased">
 
-<!-- NAV -->
-<nav class="sticky top-0 z-50 bg-white/80 border-b border-gray-100">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
-    <div class="flex items-center gap-3">
-      <div class="w-10 h-10 bg-[#0047AB] rounded-xl flex items-center justify-center font-black text-white text-xl shadow-lg shadow-blue-200">N</div>
-      <span class="text-2xl font-black tracking-tight text-[#0047AB]">Nexo<span class="text-[#FFBF00]">Local</span></span>
-    </div>
-    <div class="hidden lg:flex gap-8 text-sm font-bold uppercase tracking-wider text-gray-400">
-      <a href="#galeria" class="hover:text-[#0047AB] transition-colors">Plantillas</a>
-    </div>
-    <div class="flex items-center gap-4">
-      <a href="https://nexolocal.lat" target="_blank" rel="noopener" class="bg-[#0047AB] text-white px-5 py-2.5 rounded-xl font-black text-sm shadow-lg shadow-blue-200 hover:bg-blue-800 transition-colors">Web Oficial</a>
-    </div>
-  </div>
-</nav>
-
-<!-- HERO -->
-<header class="hero-gradient relative overflow-hidden py-24 md:py-36">
-  <div class="particle w-96 h-96 bg-blue-300 top-[-10%] right-[-10%]" style="animation-delay:0s"></div>
-  <div class="particle w-64 h-64 bg-yellow-300 bottom-[-5%] left-[-5%]" style="animation-delay:2s"></div>
-  <div class="particle w-48 h-48 bg-blue-200 top-[30%] left-[20%]" style="animation-delay:4s"></div>
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 relative z-10 text-center">
-    <h1 class="text-5xl md:text-7xl font-black text-white leading-none mb-6">Plantillas Web<br><span class="gradient-text">para PYMEs</span></h1>
-    <p class="text-white/70 text-lg md:text-xl font-medium max-w-2xl mx-auto mb-12 leading-relaxed">5 demos reales listos para ver — taquerías, minisupers, boutiques, farmacias y ferreterías. Haz clic en cualquier plantilla para explorarla.</p>
-    <div class="flex flex-col sm:flex-row gap-4 justify-center">
-      <a href="#galeria" class="bg-[#FFBF00] text-[#002D6B] px-8 py-4 rounded-2xl font-black text-sm uppercase tracking-wider hover:bg-yellow-300 transition-colors shadow-xl shadow-yellow-500/30">Ver las 5 Plantillas →</a>
-    </div>
-    <div class="mt-16 grid grid-cols-2 md:grid-cols-3 gap-4 max-w-2xl mx-auto">
-      <div class="bg-white/10 border border-white/15 rounded-2xl p-5"><div class="text-3xl font-black text-white">5</div><div class="text-xs text-white/50 font-bold uppercase mt-1">Plantillas Demo</div></div>
-      <div class="bg-white/10 border border-white/15 rounded-2xl p-5"><div class="text-3xl font-black text-white">5</div><div class="text-xs text-white/50 font-bold uppercase mt-1">Industrias</div></div>
-      <div class="bg-white/10 border border-white/15 rounded-2xl p-5"><div class="text-3xl font-black text-[#FFBF00]">72h</div><div class="text-xs text-white/50 font-bold uppercase mt-1">Tiempo de Entrega</div></div>
-    </div>
-  </div>
-</header>
-
-
-
-<!-- GALERÍA DE PLANTILLAS -->
-<section id="galeria" class="py-20 bg-slate-50">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6">
-    <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-12 gap-8 reveal">
-      <div>
-        <div class="inline-block bg-blue-100 text-[#0047AB] text-xs font-black uppercase tracking-widest px-4 py-2 rounded-full mb-4">🗂️ Catálogo</div>
-        <h2 class="text-4xl md:text-5xl font-black text-gray-900 mb-2">Galería de Plantillas</h2>
-        <p class="text-gray-400 font-medium">5 demos reales — haz clic en "Visualizar Demo" para ver el sitio completo funcionando.</p>
+  <!-- NAV -->
+  <nav class="sticky top-0 z-50 bg-white/80 border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <img src="ICONO.svg" alt="Nexo Local" class="w-12 h-12 drop-shadow-md" />
+        <span class="text-2xl font-black tracking-tight text-[#0047AB]">Nexo<span class="text-[#FFBF00]">Local</span></span>
       </div>
-      <div class="flex flex-wrap gap-2 p-2 bg-white rounded-2xl shadow-sm border border-gray-100">
-        <button onclick="filterType('todas',this)" class="filter-btn active px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider">Todas</button>
-        <button onclick="filterType('taqueria',this)" class="filter-btn px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider">🌮 Taquerías</button>
-        <button onclick="filterType('minisuper',this)" class="filter-btn px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider">🛒 Minisuper</button>
-        <button onclick="filterType('boutique',this)" class="filter-btn px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider">👗 Boutiques</button>
-        <button onclick="filterType('farmacia',this)" class="filter-btn px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider">💊 Farmacias</button>
-        <button onclick="filterType('ferreteria',this)" class="filter-btn px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider">🔧 Ferreterías</button>
+      <div class="hidden lg:flex gap-8 text-sm font-bold uppercase tracking-wider text-gray-400">
+        <a href="#galeria" class="hover:text-[#0047AB] transition-colors">Plantillas</a>
+      </div>
+      <div class="flex items-center gap-4">
+        <a href="https://nexolocal.lat" target="_blank" rel="noopener"
+          class="bg-[#0047AB] text-white px-5 py-2.5 rounded-xl font-black text-sm shadow-lg shadow-blue-200 hover:bg-blue-800 transition-colors">Web
+          Oficial</a>
       </div>
     </div>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5" id="templateContainer"></div>
-  </div>
-</section>
+  </nav>
 
-
-
-
-
-<!-- FOOTER -->
-<footer class="bg-[#0C0C1A] text-white py-12 px-4">
-  <div class="max-w-7xl mx-auto">
-    <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
-      <div class="flex items-center gap-3">
-        <div class="w-8 h-8 bg-[#0047AB] rounded-lg flex items-center justify-center font-black text-white text-sm">N</div>
-        <span class="text-lg font-black text-white">Nexo<span class="text-[#FFBF00]">Local</span></span>
+  <!-- HERO -->
+  <header class="hero-gradient relative overflow-hidden py-24 md:py-36">
+    <div class="particle w-96 h-96 bg-blue-300 top-[-10%] right-[-10%]" style="animation-delay:0s"></div>
+    <div class="particle w-64 h-64 bg-yellow-300 bottom-[-5%] left-[-5%]" style="animation-delay:2s"></div>
+    <div class="particle w-48 h-48 bg-blue-200 top-[30%] left-[20%]" style="animation-delay:4s"></div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 relative z-10 text-center">
+      <h1 class="text-5xl md:text-7xl font-black text-white leading-none mb-6">Plantillas Web<br><span
+          class="gradient-text">para PYMEs</span></h1>
+      <p class="text-white/70 text-lg md:text-xl font-medium max-w-2xl mx-auto mb-12 leading-relaxed">5 demos reales
+        listos para ver — taquerías, minisupers, boutiques, farmacias y ferreterías. Haz clic en cualquier plantilla
+        para explorarla.</p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="#galeria"
+          class="bg-[#FFBF00] text-[#002D6B] px-8 py-4 rounded-2xl font-black text-sm uppercase tracking-wider hover:bg-yellow-300 transition-colors shadow-xl shadow-yellow-500/30">Ver
+          las 5 Plantillas →</a>
       </div>
-      <p class="text-gray-500 text-xs font-bold uppercase tracking-widest text-center">Propiedad Intelectual 2026 · Nexo_Local</p>
-      <a href="https://wa.me/529933440942" target="_blank" rel="noopener" class="pulse-ring bg-[#25D366] px-6 py-3 rounded-2xl font-black text-sm shadow-xl hover:scale-105 transition-transform uppercase tracking-wider">💬 Contactar</a>
+      <div class="mt-16 grid grid-cols-2 md:grid-cols-3 gap-4 max-w-2xl mx-auto">
+        <div class="bg-white/10 border border-white/15 rounded-2xl p-5">
+          <div class="text-3xl font-black text-white">5</div>
+          <div class="text-xs text-white/50 font-bold uppercase mt-1">Plantillas Demo</div>
+        </div>
+        <div class="bg-white/10 border border-white/15 rounded-2xl p-5">
+          <div class="text-3xl font-black text-white">5</div>
+          <div class="text-xs text-white/50 font-bold uppercase mt-1">Industrias</div>
+        </div>
+        <div class="bg-white/10 border border-white/15 rounded-2xl p-5">
+          <div class="text-3xl font-black text-[#FFBF00]">72h</div>
+          <div class="text-xs text-white/50 font-bold uppercase mt-1">Tiempo de Entrega</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+
+  <!-- GALERÍA DE PLANTILLAS -->
+  <section id="galeria" class="py-20 bg-slate-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-12 gap-8 reveal">
+        <div>
+          <div
+            class="inline-block bg-blue-100 text-[#0047AB] text-xs font-black uppercase tracking-widest px-4 py-2 rounded-full mb-4">
+            🗂️ Catálogo</div>
+          <h2 class="text-4xl md:text-5xl font-black text-gray-900 mb-2">Galería de Plantillas</h2>
+          <p class="text-gray-400 font-medium">5 demos reales — haz clic en "Visualizar Demo" para ver el sitio completo
+            funcionando.</p>
+        </div>
+        <div class="flex flex-wrap gap-2 p-2 bg-white rounded-2xl shadow-sm border border-gray-100">
+          <button onclick="filterType('todas',this)"
+            class="filter-btn active px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider">Todas</button>
+          <button onclick="filterType('taqueria',this)"
+            class="filter-btn px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider">🌮 Taquerías</button>
+          <button onclick="filterType('minisuper',this)"
+            class="filter-btn px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider">🛒 Minisuper</button>
+          <button onclick="filterType('boutique',this)"
+            class="filter-btn px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider">👗 Boutiques</button>
+          <button onclick="filterType('farmacia',this)"
+            class="filter-btn px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider">💊 Farmacias</button>
+          <button onclick="filterType('ferreteria',this)"
+            class="filter-btn px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider">🔧 Ferreterías</button>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5" id="templateContainer"></div>
+    </div>
+  </section>
+
+
+
+
+
+  <!-- FOOTER -->
+  <footer class="bg-[#0C0C1A] text-white py-12 px-4">
+    <div class="max-w-7xl mx-auto">
+      <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 bg-[#0047AB] rounded-lg flex items-center justify-center font-black text-white text-sm">N
+          </div>
+          <span class="text-lg font-black text-white">Nexo<span class="text-[#FFBF00]">Local</span></span>
+        </div>
+        <p class="text-gray-500 text-xs font-bold uppercase tracking-widest text-center">Propiedad Intelectual 2026 ·
+          Nexo_Local</p>
+        <a href="https://wa.me/529933440942" target="_blank" rel="noopener"
+          class="pulse-ring bg-[#25D366] px-6 py-3 rounded-2xl font-black text-sm shadow-xl hover:scale-105 transition-transform uppercase tracking-wider">💬
+          Contactar</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- DEMO MODAL -->
+  <div id="demoModal" class="modal-overlay" onclick="if(event.target===this)closeDemoModal()">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeDemoModal()">✕</button>
+      <div id="demoModalContent" class="p-4 md:p-6"></div>
     </div>
   </div>
-</footer>
 
-<!-- DEMO MODAL -->
-<div id="demoModal" class="modal-overlay" onclick="if(event.target===this)closeDemoModal()">
-  <div class="modal-box">
-    <button class="modal-close" onclick="closeDemoModal()">✕</button>
-    <div id="demoModalContent" class="p-4 md:p-6"></div>
-  </div>
-</div>
-
-<!-- FORM MODAL -->
-<div id="formModal" class="modal-overlay" onclick="if(event.target===this)closeFormModal()">
-  <div class="modal-box" style="max-width:520px;">
-    <button class="modal-close" onclick="closeFormModal()">✕</button>
-    <div class="p-6 md:p-8">
-      <div class="mb-6">
-        <div id="formBadge" class="inline-block text-[10px] font-black uppercase px-2.5 py-1 rounded-lg mb-3"></div>
-        <h3 class="text-2xl font-black text-gray-900 mb-1">Solicitar Plantilla</h3>
-        <p id="formTemplateName" class="text-[#0047AB] font-bold text-sm"></p>
-        <p class="text-gray-400 text-xs mt-2">Completa el formulario y te contactaremos en menos de 24 horas por WhatsApp.</p>
+  <!-- FORM MODAL -->
+  <div id="formModal" class="modal-overlay" onclick="if(event.target===this)closeFormModal()">
+    <div class="modal-box" style="max-width:520px;">
+      <button class="modal-close" onclick="closeFormModal()">✕</button>
+      <div class="p-6 md:p-8">
+        <div class="mb-6">
+          <div id="formBadge" class="inline-block text-[10px] font-black uppercase px-2.5 py-1 rounded-lg mb-3"></div>
+          <h3 class="text-2xl font-black text-gray-900 mb-1">Solicitar Plantilla</h3>
+          <p id="formTemplateName" class="text-[#0047AB] font-bold text-sm"></p>
+          <p class="text-gray-400 text-xs mt-2">Completa el formulario y te contactaremos en menos de 24 horas por
+            WhatsApp.</p>
+        </div>
+        <form id="solicitudForm" class="space-y-4" onsubmit="submitForm(event)">
+          <div>
+            <label class="text-xs font-black uppercase text-gray-500 tracking-wider block mb-1.5">Nombre del Negocio
+              *</label>
+            <input id="f_negocio" type="text" required placeholder="Ej: Tacos El Güero" class="form-field">
+          </div>
+          <div>
+            <label class="text-xs font-black uppercase text-gray-500 tracking-wider block mb-1.5">Nombre del Dueño
+              *</label>
+            <input id="f_dueno" type="text" required placeholder="Nombre completo" class="form-field">
+          </div>
+          <div>
+            <label class="text-xs font-black uppercase text-gray-500 tracking-wider block mb-1.5">WhatsApp *</label>
+            <input id="f_whatsapp" type="tel" required placeholder="+52 993 000 0000" class="form-field">
+          </div>
+          <div>
+            <label class="text-xs font-black uppercase text-gray-500 tracking-wider block mb-1.5">Ciudad / Municipio
+              *</label>
+            <input id="f_ciudad" type="text" required placeholder="Ej: Villahermosa, Tabasco" class="form-field">
+          </div>
+          <div>
+            <label class="text-xs font-black uppercase text-gray-500 tracking-wider block mb-1.5">Giro del
+              Negocio</label>
+            <input id="f_giro" type="text" placeholder="Ej: Taquería, Boutique, Ferretería..." class="form-field">
+          </div>
+          <div>
+            <label class="text-xs font-black uppercase text-gray-500 tracking-wider block mb-1.5">¿Algo más que quieras
+              agregar?</label>
+            <textarea id="f_notas" rows="2" placeholder="Colores, logo, redes sociales, etc."
+              class="form-field resize-none"></textarea>
+          </div>
+          <input type="hidden" id="f_template">
+          <input type="hidden" id="f_plan">
+          <button type="submit"
+            class="w-full bg-[#25D366] text-white py-4 rounded-2xl font-black text-sm uppercase tracking-wider hover:bg-green-500 transition-colors shadow-lg shadow-green-200 mt-2">
+            📲 Enviar por WhatsApp
+          </button>
+          <p class="text-center text-xs text-gray-400">Te abrirá WhatsApp con tu información pre-cargada.</p>
+        </form>
       </div>
-      <form id="solicitudForm" class="space-y-4" onsubmit="submitForm(event)">
-        <div>
-          <label class="text-xs font-black uppercase text-gray-500 tracking-wider block mb-1.5">Nombre del Negocio *</label>
-          <input id="f_negocio" type="text" required placeholder="Ej: Tacos El Güero" class="form-field">
-        </div>
-        <div>
-          <label class="text-xs font-black uppercase text-gray-500 tracking-wider block mb-1.5">Nombre del Dueño *</label>
-          <input id="f_dueno" type="text" required placeholder="Nombre completo" class="form-field">
-        </div>
-        <div>
-          <label class="text-xs font-black uppercase text-gray-500 tracking-wider block mb-1.5">WhatsApp *</label>
-          <input id="f_whatsapp" type="tel" required placeholder="+52 993 000 0000" class="form-field">
-        </div>
-        <div>
-          <label class="text-xs font-black uppercase text-gray-500 tracking-wider block mb-1.5">Ciudad / Municipio *</label>
-          <input id="f_ciudad" type="text" required placeholder="Ej: Villahermosa, Tabasco" class="form-field">
-        </div>
-        <div>
-          <label class="text-xs font-black uppercase text-gray-500 tracking-wider block mb-1.5">Giro del Negocio</label>
-          <input id="f_giro" type="text" placeholder="Ej: Taquería, Boutique, Ferretería..." class="form-field">
-        </div>
-        <div>
-          <label class="text-xs font-black uppercase text-gray-500 tracking-wider block mb-1.5">¿Algo más que quieras agregar?</label>
-          <textarea id="f_notas" rows="2" placeholder="Colores, logo, redes sociales, etc." class="form-field resize-none"></textarea>
-        </div>
-        <input type="hidden" id="f_template">
-        <input type="hidden" id="f_plan">
-        <button type="submit" class="w-full bg-[#25D366] text-white py-4 rounded-2xl font-black text-sm uppercase tracking-wider hover:bg-green-500 transition-colors shadow-lg shadow-green-200 mt-2">
-          📲 Enviar por WhatsApp
-        </button>
-        <p class="text-center text-xs text-gray-400">Te abrirá WhatsApp con tu información pre-cargada.</p>
-      </form>
     </div>
   </div>
-</div>
 
-<script>
-// ── DEMO HTML PAGES (embedded) ─────────────────────────────────────────────
-const demoPages = {
-  1: `<!DOCTYPE html>
+  <script>
+    // ── DEMO HTML PAGES (embedded) ─────────────────────────────────────────────
+    const demoPages = {
+      1: `<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -447,7 +715,7 @@ const demoPages = {
 </body>
 </html>
 `,
-  2: `<!DOCTYPE html>
+      2: `<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -645,7 +913,7 @@ const demoPages = {
 </body>
 </html>
 `,
-  3: `<!DOCTYPE html>
+      3: `<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -888,7 +1156,7 @@ const demoPages = {
 </body>
 </html>
 `,
-  4: `<!DOCTYPE html>
+      4: `<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -1083,7 +1351,7 @@ const demoPages = {
 </body>
 </html>
 `,
-  5: `<!DOCTYPE html>
+      5: `<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -1306,47 +1574,57 @@ const demoPages = {
 </body>
 </html>
 `
-};
+    };
 
-// ── TEMPLATE DATA ──────────────────────────────────────────────────────────
-const templates = [
-  { id:1, type:'taqueria',   plan:'cosecha', name:'Tacos El Parrillero', emoji:'🌮',
-     desc:'Menú interactivo con 6 platillos, precios, horarios y pedidos directos por WhatsApp. Entrega a domicilio integrada.',
-     focus:'Pedidos',   heroColor:'linear-gradient(135deg,#3d1200,#6b2400)' },
-  { id:2, type:'minisuper',  plan:'cosecha', name:'Minisuper La Economía', emoji:'🛒',
-     desc:'Catálogo de productos por categoría, ofertas semanales, horarios de atención y pedidos por WhatsApp.',
-     focus:'Catálogo',  heroColor:'linear-gradient(135deg,#0d4a21,#27ae60)' },
-  { id:3, type:'boutique',   plan:'cosecha', name:'Boutique Estilo Único', emoji:'👗',
-     desc:'Galería de productos con tallas, colores y precios. Cada prenda tiene link directo a WhatsApp con mensaje pre-escrito.',
-     focus:'Conversión', heroColor:'linear-gradient(135deg,#4a1528,#7d2442)' },
-  { id:4, type:'farmacia',   plan:'semilla', name:'Farmacia Del Pueblo', emoji:'💊',
-     desc:'Servicios médicos, verificación de medicamentos por WhatsApp, horarios extendidos y servicio de urgencias 24/7.',
-     focus:'Confianza', heroColor:'linear-gradient(135deg,#0a2744,#1565C0)' },
-  { id:5, type:'ferreteria', plan:'cosecha', name:'Ferretería El Constructor', emoji:'🔧',
-     desc:'Categorías de productos, lista de más vendidos con precios, y cotizaciones gratuitas por WhatsApp para obras.',
-     focus:'Eficiencia', heroColor:'linear-gradient(135deg,#0d0d0d,#37474f)' }
-];
+    // ── TEMPLATE DATA ──────────────────────────────────────────────────────────
+    const templates = [
+      {
+        id: 1, type: 'taqueria', plan: 'cosecha', name: 'Tacos El Parrillero', emoji: '🌮',
+        desc: 'Menú interactivo con 6 platillos, precios, horarios y pedidos directos por WhatsApp. Entrega a domicilio integrada.',
+        focus: 'Pedidos', heroColor: 'linear-gradient(135deg,#3d1200,#6b2400)'
+      },
+      {
+        id: 2, type: 'minisuper', plan: 'cosecha', name: 'Minisuper La Economía', emoji: '🛒',
+        desc: 'Catálogo de productos por categoría, ofertas semanales, horarios de atención y pedidos por WhatsApp.',
+        focus: 'Catálogo', heroColor: 'linear-gradient(135deg,#0d4a21,#27ae60)'
+      },
+      {
+        id: 3, type: 'boutique', plan: 'cosecha', name: 'Boutique Estilo Único', emoji: '👗',
+        desc: 'Galería de productos con tallas, colores y precios. Cada prenda tiene link directo a WhatsApp con mensaje pre-escrito.',
+        focus: 'Conversión', heroColor: 'linear-gradient(135deg,#4a1528,#7d2442)'
+      },
+      {
+        id: 4, type: 'farmacia', plan: 'semilla', name: 'Farmacia Del Pueblo', emoji: '💊',
+        desc: 'Servicios médicos, verificación de medicamentos por WhatsApp, horarios extendidos y servicio de urgencias 24/7.',
+        focus: 'Confianza', heroColor: 'linear-gradient(135deg,#0a2744,#1565C0)'
+      },
+      {
+        id: 5, type: 'ferreteria', plan: 'cosecha', name: 'Ferretería El Constructor', emoji: '🔧',
+        desc: 'Categorías de productos, lista de más vendidos con precios, y cotizaciones gratuitas por WhatsApp para obras.',
+        focus: 'Eficiencia', heroColor: 'linear-gradient(135deg,#0d0d0d,#37474f)'
+      }
+    ];
 
-// ── RENDER CARDS ───────────────────────────────────────────────────────────
-function filterType(type, btn) {
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  if (btn) btn.classList.add('active');
-  const filtered = type === 'todas' ? templates : templates.filter(t => t.type === type);
-  const container = document.getElementById('templateContainer');
-  container.style.cssText = 'opacity:0;transform:translateY(10px);transition:opacity .2s ease,transform .2s ease;';
-  setTimeout(() => {
-    container.innerHTML = '';
-    filtered.forEach(t => {
-      const isCos = t.plan === 'cosecha';
-      const el = document.createElement('div');
-      el.className = 'template-card bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden flex flex-col';
-      el.innerHTML = `
+    // ── RENDER CARDS ───────────────────────────────────────────────────────────
+    function filterType(type, btn) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      const filtered = type === 'todas' ? templates : templates.filter(t => t.type === type);
+      const container = document.getElementById('templateContainer');
+      container.style.cssText = 'opacity:0;transform:translateY(10px);transition:opacity .2s ease,transform .2s ease;';
+      setTimeout(() => {
+        container.innerHTML = '';
+        filtered.forEach(t => {
+          const isCos = t.plan === 'cosecha';
+          const el = document.createElement('div');
+          el.className = 'template-card bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden flex flex-col';
+          el.innerHTML = `
         <div class="demo-preview-strip" style="background:${t.heroColor}">
           <span style="filter:drop-shadow(0 4px 12px rgba(0,0,0,0.4));font-size:64px;">${t.emoji}</span>
         </div>
         <div class="p-5 flex flex-col flex-grow">
           <div class="flex justify-between items-start mb-3">
-            <span class="text-[10px] font-black uppercase px-2.5 py-1 rounded-lg ${isCos?'badge-cosecha':'badge-semilla'}">${isCos?'⭐ Cosecha':'🌱 Semilla'}</span>
+            <span class="text-[10px] font-black uppercase px-2.5 py-1 rounded-lg ${isCos ? 'badge-cosecha' : 'badge-semilla'}">${isCos ? '⭐ Cosecha' : '🌱 Semilla'}</span>
             <span class="text-[10px] bg-gray-100 text-gray-400 font-black px-2 py-0.5 rounded-md uppercase">#0${t.id}</span>
           </div>
           <h4 class="text-base font-black text-gray-900 mb-2">${t.name}</h4>
@@ -1357,24 +1635,24 @@ function filterType(type, btn) {
           <button onclick="openDemo(${t.id})" class="block w-full bg-[#0047AB] text-white py-3 rounded-2xl text-xs font-black uppercase tracking-wider hover:bg-blue-800 transition-all text-center">👁 Visualizar Demo</button>
           <button onclick="openForm(${t.id})" class="block w-full bg-slate-50 border border-blue-50 py-3 rounded-2xl text-xs font-black text-[#0047AB] hover:bg-blue-50 transition-all text-center uppercase tracking-wider">Solicitar plantilla</button>
         </div>`;
-      container.appendChild(el);
-    });
-    container.style.cssText = 'opacity:1;transform:translateY(0);transition:opacity .3s ease,transform .3s ease;';
-  }, 200);
-}
+          container.appendChild(el);
+        });
+        container.style.cssText = 'opacity:1;transform:translateY(0);transition:opacity .3s ease,transform .3s ease;';
+      }, 200);
+    }
 
-// ── OPEN / CLOSE DEMO MODAL ────────────────────────────────────────────────
-function openDemo(id) {
-  const t = templates.find(x => x.id === id);
-  const isCos = t.plan === 'cosecha';
-  const slugName = t.name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,'-');
-  document.getElementById('demoModalContent').innerHTML = `
+    // ── OPEN / CLOSE DEMO MODAL ────────────────────────────────────────────────
+    function openDemo(id) {
+      const t = templates.find(x => x.id === id);
+      const isCos = t.plan === 'cosecha';
+      const slugName = t.name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\s+/g, '-');
+      document.getElementById('demoModalContent').innerHTML = `
     <div class="flex items-center justify-between mb-4">
       <div class="flex items-center gap-3">
         <span class="text-3xl">${t.emoji}</span>
         <div>
           <h3 class="text-xl font-black text-gray-900">${t.name}</h3>
-          <span class="text-[10px] font-black uppercase px-2.5 py-1 rounded-lg ${isCos?'badge-cosecha':'badge-semilla'}">${isCos?'⭐ Plan Cosecha':'🌱 Plan Semilla'}</span>
+          <span class="text-[10px] font-black uppercase px-2.5 py-1 rounded-lg ${isCos ? 'badge-cosecha' : 'badge-semilla'}">${isCos ? '⭐ Plan Cosecha' : '🌱 Plan Semilla'}</span>
         </div>
       </div>
       <div class="flex items-center gap-2 text-xs font-black text-gray-400 uppercase tracking-wider">
@@ -1388,7 +1666,7 @@ function openDemo(id) {
         <div class="browser-dot" style="background:#febc2e"></div>
         <div class="browser-dot" style="background:#28c840"></div>
         <div class="browser-url">nexolocal.lat/${slugName}</div>
-        <span class="text-[9px] font-black px-2 py-0.5 rounded ${isCos?'bg-yellow-400 text-yellow-900':'bg-slate-600 text-white'}">${isCos?'COSECHA':'SEMILLA'}</span>
+        <span class="text-[9px] font-black px-2 py-0.5 rounded ${isCos ? 'bg-yellow-400 text-yellow-900' : 'bg-slate-600 text-white'}">${isCos ? 'COSECHA' : 'SEMILLA'}</span>
       </div>
       <iframe srcdoc="${demoPages[id].replace(/"/g, '&quot;')}" class="preview-iframe" sandbox="allow-same-origin allow-scripts"></iframe>
     </div>
@@ -1396,71 +1674,72 @@ function openDemo(id) {
       <button onclick="closeDemoModal();openForm(${id})" class="flex-1 bg-[#0047AB] text-white py-4 rounded-2xl font-black text-sm uppercase tracking-wider hover:bg-blue-800 transition-colors text-center">Solicitar esta plantilla →</button>
       <button onclick="closeDemoModal()" class="flex-1 bg-gray-100 text-gray-600 py-4 rounded-2xl font-black text-sm uppercase tracking-wider hover:bg-gray-200 transition-colors text-center">Cerrar</button>
     </div>`;
-  document.getElementById('demoModal').classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
+      document.getElementById('demoModal').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
 
-function closeDemoModal() {
-  document.getElementById('demoModal').classList.remove('open');
-  // Clear iframe to stop any running scripts
-  const iframe = document.querySelector('#demoModalContent iframe');
-  if (iframe) iframe.srcdoc = '';
-  document.body.style.overflow = '';
-}
+    function closeDemoModal() {
+      document.getElementById('demoModal').classList.remove('open');
+      // Clear iframe to stop any running scripts
+      const iframe = document.querySelector('#demoModalContent iframe');
+      if (iframe) iframe.srcdoc = '';
+      document.body.style.overflow = '';
+    }
 
-// ── OPEN / CLOSE FORM MODAL ────────────────────────────────────────────────
-function openForm(id) {
-  const t = templates.find(x => x.id === id);
-  const isCos = t.plan === 'cosecha';
-  const badge = document.getElementById('formBadge');
-  badge.textContent = isCos ? '⭐ Plan Cosecha' : '🌱 Plan Semilla';
-  badge.className = 'inline-block text-[10px] font-black uppercase px-2.5 py-1 rounded-lg mb-3 ' + (isCos ? 'badge-cosecha' : 'badge-semilla');
-  document.getElementById('formTemplateName').textContent = t.emoji + ' ' + t.name;
-  document.getElementById('f_template').value = t.name;
-  document.getElementById('f_plan').value = isCos ? 'Cosecha' : 'Semilla';
-  document.getElementById('formModal').classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
+    // ── OPEN / CLOSE FORM MODAL ────────────────────────────────────────────────
+    function openForm(id) {
+      const t = templates.find(x => x.id === id);
+      const isCos = t.plan === 'cosecha';
+      const badge = document.getElementById('formBadge');
+      badge.textContent = isCos ? '⭐ Plan Cosecha' : '🌱 Plan Semilla';
+      badge.className = 'inline-block text-[10px] font-black uppercase px-2.5 py-1 rounded-lg mb-3 ' + (isCos ? 'badge-cosecha' : 'badge-semilla');
+      document.getElementById('formTemplateName').textContent = t.emoji + ' ' + t.name;
+      document.getElementById('f_template').value = t.name;
+      document.getElementById('f_plan').value = isCos ? 'Cosecha' : 'Semilla';
+      document.getElementById('formModal').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
 
-function closeFormModal() {
-  document.getElementById('formModal').classList.remove('open');
-  document.body.style.overflow = '';
-}
+    function closeFormModal() {
+      document.getElementById('formModal').classList.remove('open');
+      document.body.style.overflow = '';
+    }
 
-// ── FORM → WHATSAPP ────────────────────────────────────────────────────────
-function submitForm(e) {
-  e.preventDefault();
-  const neg   = document.getElementById('f_negocio').value;
-  const due   = document.getElementById('f_dueno').value;
-  const wa    = document.getElementById('f_whatsapp').value;
-  const ciu   = document.getElementById('f_ciudad').value;
-  const giro  = document.getElementById('f_giro').value;
-  const notas = document.getElementById('f_notas').value;
-  const tpl   = document.getElementById('f_template').value;
-  const msg = `Hola, me interesa la plantilla *${tpl}* de Nexo Local.\n\n*Negocio:* ${neg}\n*Dueño:* ${due}\n*WhatsApp:* ${wa}\n*Ciudad:* ${ciu}\n*Giro:* ${giro||'No especificado'}\n*Notas:* ${notas||'Ninguna'}`;
-  window.open('https://wa.me/529933440942?text=' + encodeURIComponent(msg), '_blank');
-  closeFormModal();
-}
+    // ── FORM → WHATSAPP ────────────────────────────────────────────────────────
+    function submitForm(e) {
+      e.preventDefault();
+      const neg = document.getElementById('f_negocio').value;
+      const due = document.getElementById('f_dueno').value;
+      const wa = document.getElementById('f_whatsapp').value;
+      const ciu = document.getElementById('f_ciudad').value;
+      const giro = document.getElementById('f_giro').value;
+      const notas = document.getElementById('f_notas').value;
+      const tpl = document.getElementById('f_template').value;
+      const msg = `Hola, me interesa la plantilla *${tpl}* de Nexo Local.\n\n*Negocio:* ${neg}\n*Dueño:* ${due}\n*WhatsApp:* ${wa}\n*Ciudad:* ${ciu}\n*Giro:* ${giro || 'No especificado'}\n*Notas:* ${notas || 'Ninguna'}`;
+      window.open('https://wa.me/529933440942?text=' + encodeURIComponent(msg), '_blank');
+      closeFormModal();
+    }
 
-// ── SCROLL REVEAL ──────────────────────────────────────────────────────────
-function initReveal() {
-  const obs = new IntersectionObserver(
-    entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
-    {threshold: .1}
-  );
-  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
-}
+    // ── SCROLL REVEAL ──────────────────────────────────────────────────────────
+    function initReveal() {
+      const obs = new IntersectionObserver(
+        entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+        { threshold: .1 }
+      );
+      document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+    }
 
-// ── ESC KEY ────────────────────────────────────────────────────────────────
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') { closeDemoModal(); closeFormModal(); }
-});
+    // ── ESC KEY ────────────────────────────────────────────────────────────────
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') { closeDemoModal(); closeFormModal(); }
+    });
 
-// ── INIT ───────────────────────────────────────────────────────────────────
-window.addEventListener('DOMContentLoaded', () => {
-  filterType('todas', document.querySelector('.filter-btn'));
-  initReveal();
-});
-</script>
+    // ── INIT ───────────────────────────────────────────────────────────────────
+    window.addEventListener('DOMContentLoaded', () => {
+      filterType('todas', document.querySelector('.filter-btn'));
+      initReveal();
+    });
+  </script>
 </body>
+
 </html>
